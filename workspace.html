@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macropol°s | Data Workspace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D0D0D;
+            color: #E0E0E0;
+        }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Syntax Highlighting Simulation */
+        .token-keyword { color: #ff7b72; }
+        .token-func { color: #d2a8ff; }
+        .token-string { color: #a5d6ff; }
+        .token-comment { color: #8b949e; }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #1a1a1a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        .glass-panel {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dark-bg': '#0D0D0D',
+                        'sidebar': '#121212',
+                        'primary': '#D4AF37',
+                        'secondary': '#2563EB',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-sidebar border-r border-gray-800 flex flex-col z-20">
+        <div class="h-16 flex items-center px-6 border-b border-gray-800">
+            <span class="text-xl font-bold tracking-tighter">Macropol<span class="text-primary">°</span>s</span>
+        </div>
+
+        <nav class="flex-1 py-6 space-y-1 px-3">
+            <p class="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">Data Services</p>
+            
+            <button onclick="switchView('grafana')" id="btn-grafana" class="nav-btn w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-lg bg-primary/10 text-primary transition-colors">
+                <i data-lucide="layout-dashboard" class="w-5 h-5 mr-3"></i>
+                Grafana / Prometheus
+            </button>
+
+            <button onclick="switchView('sql')" id="btn-sql" class="nav-btn w-full flex items-center px-3 py-2.5 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-800 hover:text-white transition-colors">
+                <i data-lucide="database" class="w-5 h-5 mr-3"></i>
+                SQL Workbench
+            </button>
+
+            <button onclick="switchView('jupyter')" id="btn-jupyter" class="nav-btn w-full flex items-center px-3 py-2.5 text-sm font-medium text-gray-400 rounded-lg hover:bg-gray-800 hover:text-white transition-colors">
+                <i data-lucide="terminal-square" class="w-5 h-5 mr-3"></i>
+                Jupyter Lab
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-gray-800">
+            <a href="index.html" class="flex items-center text-sm text-gray-400 hover:text-white">
+                <i data-lucide="log-out" class="w-4 h-4 mr-2"></i> Return to Home
+            </a>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-dark-bg relative">
+        
+        <header class="h-16 bg-dark-bg border-b border-gray-800 flex items-center justify-between px-6">
+            <div class="flex items-center">
+                <span class="h-2 w-2 rounded-full bg-green-500 mr-2"></span>
+                <span class="text-sm text-gray-400">System Status: <span class="text-white">Operational</span></span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <span class="text-sm text-gray-400">Cluster: <span class="font-mono text-white">eu-west-1-prod</span></span>
+                <div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center text-white font-bold text-xs">AD</div>
+            </div>
+        </header>
+
+        <div id="view-grafana" class="view-section flex-1 overflow-y-auto p-6 space-y-6">
+            <div class="flex justify-between items-end">
+                <div>
+                    <h2 class="text-2xl font-bold text-white">Infrastructure Overview</h2>
+                    <p class="text-gray-400 text-sm">Source: Prometheus Data Source</p>
+                </div>
+                <div class="flex space-x-2">
+                    <select class="bg-gray-900 border border-gray-700 text-white text-sm rounded px-3 py-1">
+                        <option>Last 1 Hour</option>
+                        <option>Last 24 Hours</option>
+                        <option>Last 7 Days</option>
+                    </select>
+                    <button class="bg-primary text-black px-3 py-1 rounded text-sm font-bold flex items-center"><i data-lucide="refresh-cw" class="w-3 h-3 mr-2"></i> Refresh</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="glass-panel p-4 rounded-lg col-span-2 h-64 relative">
+                    <h3 class="text-sm font-medium text-gray-400 mb-2 flex justify-between">
+                        <span>Total API Requests (RPS)</span>
+                        <i data-lucide="activity" class="w-4 h-4 text-green-500"></i>
+                    </h3>
+                    <div class="absolute bottom-4 left-4 right-4 top-10 flex items-end justify-between gap-1">
+                        <div class="w-full bg-secondary/20 h-[40%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[60%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[45%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[70%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[85%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[65%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[90%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[55%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[75%] hover:bg-secondary/40 transition-all"></div>
+                        <div class="w-full bg-secondary/20 h-[30%] hover:bg-secondary/40 transition-all"></div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-4 rounded-lg">
+                    <h3 class="text-sm font-medium text-gray-400 mb-4">Cluster Health</h3>
+                    <div class="flex flex-col justify-center h-40 items-center">
+                        <div class="relative w-32 h-32">
+                            <svg class="w-full h-full" viewBox="0 0 36 36">
+                                <path class="text-gray-800" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                                <path class="text-primary" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                            </svg>
+                            <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center flex-col">
+                                <span class="text-2xl font-bold text-white">98.5%</span>
+                                <span class="text-xs text-gray-500">Uptime</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-4 rounded-lg col-span-1">
+                    <h3 class="text-sm font-medium text-gray-400 mb-4">CPU Utilization</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span>Node-01</span><span>82%</span></div>
+                            <div class="w-full bg-gray-800 rounded-full h-2"><div class="bg-yellow-500 h-2 rounded-full" style="width: 82%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span>Node-02</span><span>45%</span></div>
+                            <div class="w-full bg-gray-800 rounded-full h-2"><div class="bg-green-500 h-2 rounded-full" style="width: 45%"></div></div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span>Node-03</span><span>91%</span></div>
+                            <div class="w-full bg-gray-800 rounded-full h-2"><div class="bg-red-500 h-2 rounded-full" style="width: 91%"></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="glass-panel p-4 rounded-lg col-span-2">
+                    <h3 class="text-sm font-medium text-gray-400 mb-4">Latency Heatmap</h3>
+                    <div class="grid grid-cols-12 gap-1 h-32">
+                        <div class="bg-green-900/40 rounded"></div><div class="bg-green-800/60 rounded"></div><div class="bg-green-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                         <div class="bg-green-900/40 rounded"></div><div class="bg-yellow-500/60 rounded"></div><div class="bg-green-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                         <div class="bg-green-900/40 rounded"></div><div class="bg-green-800/60 rounded"></div><div class="bg-red-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                         <div class="bg-green-900/40 rounded"></div><div class="bg-green-800/60 rounded"></div><div class="bg-green-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                         <div class="bg-green-900/40 rounded"></div><div class="bg-green-800/60 rounded"></div><div class="bg-green-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                         <div class="bg-green-900/40 rounded"></div><div class="bg-green-800/60 rounded"></div><div class="bg-green-500/60 rounded"></div><div class="bg-green-900/40 rounded"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-sql" class="view-section hidden flex-1 flex flex-col h-full">
+            <div class="bg-gray-900 p-2 border-b border-gray-800 flex space-x-2">
+                <button class="bg-secondary hover:bg-blue-600 text-white text-xs px-4 py-2 rounded flex items-center"><i data-lucide="play" class="w-3 h-3 mr-2"></i> Run Query</button>
+                <button class="bg-transparent border border-gray-700 text-gray-300 text-xs px-4 py-2 rounded hover:text-white">Save</button>
+                <button class="bg-transparent border border-gray-700 text-gray-300 text-xs px-4 py-2 rounded hover:text-white">Format</button>
+                <div class="flex-1"></div>
+                <span class="text-xs text-gray-500 self-center mr-3">Connection: <span class="text-green-400">dw-production-01</span></span>
+            </div>
+
+            <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+                <div class="w-full lg:w-1/2 bg-dark-bg border-r border-gray-800 p-4 font-mono text-sm overflow-auto">
+<div class="text-gray-400 leading-relaxed">
+<span class="token-comment">-- Analyze high-value transactions from Luxury Sector</span>
+<span class="token-keyword">SELECT</span> 
+    t.transaction_id, 
+    c.company_name, 
+    t.amount_usd, 
+    t.status,
+    p.product_category
+<span class="token-keyword">FROM</span> 
+    transactions t
+<span class="token-keyword">JOIN</span> 
+    companies c <span class="token-keyword">ON</span> t.company_id = c.id
+<span class="token-keyword">JOIN</span> 
+    products p <span class="token-keyword">ON</span> t.product_id = p.id
+<span class="token-keyword">WHERE</span> 
+    t.amount_usd > <span class="token-string">50000</span>
+    <span class="token-keyword">AND</span> p.product_category = <span class="token-string">'Luxury'</span>
+    <span class="token-keyword">AND</span> t.created_at >= <span class="token-keyword">DATE</span>(<span class="token-string">'now'</span>, <span class="token-string">'-30 days'</span>)
+<span class="token-keyword">ORDER BY</span> 
+    t.amount_usd <span class="token-keyword">DESC</span>
+<span class="token-keyword">LIMIT</span> <span class="token-string">100</span>;
+</div>
+                </div>
+
+                <div class="w-full lg:w-1/2 bg-[#111] flex flex-col">
+                    <div class="p-2 bg-gray-900 border-b border-gray-800 text-xs text-gray-400 uppercase">Query Results (0.24s)</div>
+                    <div class="overflow-auto flex-1">
+                        <table class="w-full text-left text-xs text-gray-300">
+                            <thead class="bg-gray-800 text-gray-100 sticky top-0">
+                                <tr>
+                                    <th class="p-3 border-b border-gray-700">transaction_id</th>
+                                    <th class="p-3 border-b border-gray-700">company_name</th>
+                                    <th class="p-3 border-b border-gray-700 text-right">amount_usd</th>
+                                    <th class="p-3 border-b border-gray-700">status</th>
+                                    <th class="p-3 border-b border-gray-700">category</th>
+                                </tr>
+                            </thead>
+                            <tbody class="font-mono">
+                                <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                    <td class="p-3 text-blue-400">txn_99821</td>
+                                    <td class="p-3">LVMH Group</td>
+                                    <td class="p-3 text-right text-green-400">1,250,000.00</td>
+                                    <td class="p-3"><span class="bg-green-900 text-green-300 px-1 rounded">COMPLETED</span></td>
+                                    <td class="p-3">Luxury</td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                    <td class="p-3 text-blue-400">txn_99845</td>
+                                    <td class="p-3">Kering SA</td>
+                                    <td class="p-3 text-right text-green-400">840,000.00</td>
+                                    <td class="p-3"><span class="bg-green-900 text-green-300 px-1 rounded">COMPLETED</span></td>
+                                    <td class="p-3">Luxury</td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                    <td class="p-3 text-blue-400">txn_99102</td>
+                                    <td class="p-3">Richemont</td>
+                                    <td class="p-3 text-right text-green-400">520,000.00</td>
+                                    <td class="p-3"><span class="bg-yellow-900 text-yellow-300 px-1 rounded">PENDING</span></td>
+                                    <td class="p-3">Luxury</td>
+                                </tr>
+                                <tr class="border-b border-gray-800 hover:bg-gray-800/50">
+                                    <td class="p-3 text-blue-400">txn_99333</td>
+                                    <td class="p-3">Prada Grp</td>
+                                    <td class="p-3 text-right text-green-400">210,000.00</td>
+                                    <td class="p-3"><span class="bg-green-900 text-green-300 px-1 rounded">COMPLETED</span></td>
+                                    <td class="p-3">Luxury</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="view-jupyter" class="view-section hidden flex-1 overflow-y-auto bg-white text-black">
+            <div class="border-b border-gray-200 p-2 flex items-center bg-gray-50">
+                <div class="mr-4 text-orange-600"><i data-lucide="file-code" class="w-6 h-6"></i></div>
+                <div>
+                    <h1 class="text-sm font-bold text-gray-700">Supply_Chain_Optimization_Model.ipynb</h1>
+                    <div class="text-xs text-gray-500">Python 3 (ipykernel) • Autosaved</div>
+                </div>
+                <div class="flex-1"></div>
+                <div class="flex space-x-2 text-gray-600">
+                    <button class="p-1 hover:bg-gray-200 rounded"><i data-lucide="save" class="w-4 h-4"></i></button>
+                    <button class="p-1 hover:bg-gray-200 rounded"><i data-lucide="plus" class="w-4 h-4"></i></button>
+                    <button class="p-1 hover:bg-gray-200 rounded"><i data-lucide="scissors" class="w-4 h-4"></i></button>
+                    <button class="p-1 hover:bg-gray-200 rounded"><i data-lucide="play" class="w-4 h-4"></i></button>
+                </div>
+            </div>
+
+            <div class="p-8 max-w-5xl mx-auto space-y-6">
+                <div class="pl-2">
+                    <h2 class="text-2xl font-bold mb-2">Predictive Logistics Model</h2>
+                    <p class="text-gray-700">This notebook calculates optimal routing based on real-time weather data and fleet availability using the <code class="bg-gray-100 px-1 rounded">Macropolos-SDK</code>.</p>
+                </div>
+
+                <div class="flex flex-col space-y-2">
+                    <div class="flex">
+                        <div class="w-16 text-right text-xs font-mono text-blue-600 pt-1 pr-2">In [1]:</div>
+                        <div class="flex-1 bg-gray-50 border border-gray-300 rounded p-3 font-mono text-sm">
+<pre><span class="text-green-600">import</span> pandas <span class="text-green-600">as</span> pd
+<span class="text-green-600">import</span> numpy <span class="text-green-600">as</span> np
+<span class="text-green-600">from</span> macropolos.ai <span class="text-green-600">import</span> LogisticsOptimizer
+
+<span class="text-gray-500"># Load dataset from Data Hub</span>
+df = pd.read_csv(<span class="text-red-600">'s3://macropolos-data/fleet_telemetry_v2.csv'</span>)
+df.head()</pre>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-16 text-right text-xs font-mono text-red-600 pt-1 pr-2">Out [1]:</div>
+                        <div class="flex-1 overflow-x-auto border border-gray-200 rounded">
+                            <table class="w-full text-xs text-left">
+                                <thead class="bg-gray-100 font-bold">
+                                    <tr><th class="p-1">id</th><th class="p-1">vehicle_type</th><th class="p-1">lat</th><th class="p-1">long</th><th class="p-1">fuel_level</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-t"><td class="p-1">V-001</td><td class="p-1">Heavy Truck</td><td class="p-1">48.8566</td><td class="p-1">2.3522</td><td class="p-1">88%</td></tr>
+                                    <tr class="border-t"><td class="p-1">V-002</td><td class="p-1">Van</td><td class="p-1">51.5074</td><td class="p-1">-0.1278</td><td class="p-1">42%</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col space-y-2">
+                    <div class="flex">
+                        <div class="w-16 text-right text-xs font-mono text-blue-600 pt-1 pr-2">In [2]:</div>
+                        <div class="flex-1 bg-gray-50 border border-gray-300 rounded p-3 font-mono text-sm">
+<pre><span class="text-gray-500"># Initialize AI Optimizer</span>
+optimizer = LogisticsOptimizer(model=<span class="text-red-600">'fast-route-xl'</span>)
+prediction = optimizer.predict_eta(df)
+
+<span class="text-green-600">print</span>(f<span class="text-red-600">"Optimization complete. Efficiency gain: {prediction['efficiency_gain']}%"</span>)</pre>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="w-16 text-right text-xs font-mono text-red-600 pt-1 pr-2"></div>
+                        <div class="flex-1 font-mono text-sm text-gray-700">
+                            Optimization complete. Efficiency gain: 14.2%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        function switchView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            
+            // Reset Sidebar Buttons
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-primary/10', 'text-primary');
+                btn.classList.add('text-gray-400', 'hover:bg-gray-800');
+            });
+
+            // Show selected view
+            document.getElementById('view-' + viewName).classList.remove('hidden');
+
+            // Highlight selected button
+            const activeBtn = document.getElementById('btn-' + viewName);
+            activeBtn.classList.remove('text-gray-400', 'hover:bg-gray-800');
+            activeBtn.classList.add('bg-primary/10', 'text-primary');
+        }
+    </script>
+</body>
+</html>
