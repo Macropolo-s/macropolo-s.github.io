@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Macropol°s | The Architecture of Tomorrow's Business</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Inter Font (Apple-like) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
@@ -72,52 +75,66 @@
 </head>
 <body class="bg-dark-bg text-light-text">
 
+    <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-gray-800">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
+            <!-- Logo -->
             <a href="#home" class="text-3xl font-bold tracking-tighter">
                 Macropol<span class="text-primary">°</span>s
             </a>
             
+            <!-- Desktop Nav -->
             <div class="hidden md:flex items-center space-x-6">
                 <a href="#solutions" class="text-subtle-text hover:text-white transition duration-300">Solutions</a>
                 <a href="#hubs" class="text-subtle-text hover:text-white transition duration-300">AI & Data Hubs</a>
                 <a href="#partners" class="text-subtle-text hover:text-white transition duration-300">Partners</a>
                 <a href="#about" class="text-subtle-text hover:text-white transition duration-300">About Us</a>
                 
+                <!-- === USER AUTH === -->
                 <a href="#login" class="text-subtle-text hover:text-white transition duration-300">Log In</a>
                 <a href="#signup" class="border border-subtle-text text-subtle-text px-5 py-2.5 rounded-full font-medium hover:text-white hover:border-white transition duration-300">
                     Sign Up
                 </a>
+
                 <a href="#contact" class="bg-primary text-dark-bg px-5 py-2.5 rounded-full font-medium hover:bg-primary-hover transition duration-300 shadow-lg primary-glow">
                     Contact Sales
                 </a>
             </div>
             
+            <!-- Mobile Menu Button -->
             <button id="menu-btn" class="md:hidden p-2 rounded-md text-subtle-text hover:text-white">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
         
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-dark-surface border-t border-gray-800">
             <a href="#solutions" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Solutions</a>
             <a href="#hubs" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">AI & Data Hubs</a>
             <a href="#partners" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Partners</a>
             <a href="#about" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">About Us</a>
             
+            <!-- === USER AUTH (MOBILE) === -->
             <a href="#login" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Log In</a>
             <a href="#signup" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Sign Up</a>
+
             <a href="#contact" class="block py-3 px-4 text-lg bg-primary/20 text-primary hover:bg-primary/30" onclick="toggleMenu()">Contact Sales</a>
         </div>
     </header>
 
     <main>
+        <!-- Section 1: Hero -->
         <section id="home" class="min-h-screen flex items-center pt-20 relative overflow-hidden">
             
+            <!-- === 4K VIDEO BACKGROUND === -->
             <video id="hero-video" autoplay loop muted playsinline poster="https://via.placeholder.com/1920x1080.png?text=Loading+Video...">
                 <source src="https://videos.pexels.com/video-files/3254013/3254013-hd_1920_1080_25fps.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
+            <!-- Dark Overlay -->
             <div class="absolute top-0 left-0 w-full h-full bg-dark-bg/60 z-1"></div>
+            <!-- === END 4K VIDEO BACKGROUND === -->
+
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
                 <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-white mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
                     The Architecture
@@ -128,6 +145,7 @@
                     Macropol°s builds intelligent, scalable B2B ecosystems—from advanced logistics optimization to a federated AI marketplace.
                 </p>
                 <div class="flex justify-center items-center gap-4 animate-fade-in-up" style="animation-delay: 0.6s;">
+                    <!-- === LINK TO CATALOG === -->
                     <a href="#catalog" class="bg-primary text-dark-bg px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-hover transition duration-300 shadow-lg primary-glow transform hover:scale-105">
                         Explore Solutions
                     </a>
@@ -138,6 +156,7 @@
             </div>
         </section>
 
+        <!-- === LUXURY PRODUCT CATALOG === -->
         <section id="catalog" class="py-24 bg-dark-bg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Luxury Product Showcase</h2>
@@ -146,7 +165,9 @@
                 </p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Product Card 1 -->
                     <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
+                        <!-- === 8K PHOTO PLACEHOLDER === -->
                         <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(Chronograph)" alt="8K placeholder for Aura Chronograph" class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-2xl font-bold text-white mb-2">Aura Chronograph 18k</h3>
@@ -156,7 +177,9 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Product Card 2 -->
                     <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
+                        <!-- === 8K PHOTO PLACEHOLDER === -->
                         <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(Gown)" alt="8K placeholder for Atelier Silk Gown" class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-2xl font-bold text-white mb-2">Atelier Silk Gown</h3>
@@ -166,7 +189,9 @@
                             </a>
                         </div>
                     </div>
+                    <!-- Product Card 3 -->
                     <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
+                        <!-- === 8K PHOTO PLACEHOLDER === -->
                         <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(NFT)" alt="8K placeholder for Vector-9 Origin NFT" class="w-full h-64 object-cover">
                         <div class="p-6">
                             <h3 class="text-2xl font-bold text-white mb-2">Vector-9 'Origin' NFT</h3>
@@ -179,6 +204,8 @@
                 </div>
             </div>
         </section>
+
+        <!-- Section 2: Core Solutions -->
         <section id="solutions" class="py-24 bg-dark-surface">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Integrated B2B Ecosystems</h2>
@@ -187,21 +214,25 @@
                 </p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Solution Card 1: Logistics -->
                     <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-primary">
                         <i data-lucide="map-pin" class="w-12 h-12 text-primary mb-4"></i>
                         <h3 class="text-2xl font-bold text-white mb-3">Dynamic Logistics Optimization</h3>
                         <p class="text-subtle-text text-lg">Uber-like mapping, real-time fleet management, and predictive routing for enterprise-grade delivery and logistics networks.</p>
                     </div>
+                    <!-- Solution Card 2: Cartography -->
                     <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-primary">
                         <i data-lucide="compass" class="w-12 h-12 text-primary mb-4"></i>
                         <h3 class="text-2xl font-bold text-white mb-3">Architectural & GIS Cartography</h3>
                         <p class="text-subtle-text text-lg">High-precision 3D mapping and spatial data solutions for architects, urban planners, and real estate developers.</p>
                     </div>
+                    <!-- Solution Card 3: CRM -->
                     <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-secondary">
                         <i data-lucide="users" class="w-12 h-12 text-secondary mb-4"></i>
                         <h3 class="text-2xl font-bold text-white mb-3">Bespoke Client Relationship Mgmt</h3>
                         <p class="text-subtle-text text-lg">Intelligent CRM platforms tailored for complex B2B sales cycles, long-term client nurturing, and deep data analytics.</p>
                     </div>
+                    <!-- Solution Card 4: ERP -->
                     <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-secondary">
                         <i data-lucide="factory" class="w-12 h-12 text-secondary mb-4"></i>
                         <h3 class="text-2xl font-bold text-white mb-3">Industrial-Grade ERP</h3>
@@ -211,6 +242,7 @@
             </div>
         </section>
 
+        <!-- === ELEGANT CRM FORUM === -->
         <section id="crm-forum" class="py-24 bg-dark-bg">
             <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Bespoke CRM: Community & Support</h2>
@@ -226,7 +258,9 @@
                         </button>
                     </div>
 
+                    <!-- Forum Post List -->
                     <div class="space-y-4">
+                        <!-- Post 1 -->
                         <div class="flex flex-col sm:flex-row p-5 bg-dark-bg rounded-lg border border-gray-700 hover:border-secondary transition duration-300">
                             <div class="flex-shrink-0 flex items-center mb-3 sm:mb-0 sm:mr-5">
                                 <i data-lucide="bar-chart-3" class="w-8 h-8 text-secondary mr-3"></i>
@@ -240,6 +274,7 @@
                                 <p class="text-subtle-text mt-1">Started by <span class="text-primary-hover">Anna DeVere</span> (Acme Luxury) 3 hours ago</p>
                             </div>
                         </div>
+                        <!-- Post 2 -->
                         <div class="flex flex-col sm:flex-row p-5 bg-dark-bg rounded-lg border border-gray-700 hover:border-secondary transition duration-300">
                             <div class="flex-shrink-0 flex items-center mb-3 sm:mb-0 sm:mr-5">
                                 <i data-lucide="loader" class="w-8 h-8 text-secondary mr-3"></i>
@@ -257,28 +292,32 @@
                 </div>
             </div>
         </section>
+
+        <!-- Section 3: AI & Data Hubs -->
         <section id="hubs" class="py-24 bg-dark-surface"> 
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-16">The Nexus of AI & Data</h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- AI Hub Card -->
                     <div class="bg-dark-bg p-10 rounded-2xl border border-gray-800 flex flex-col items-center text-center">
                         <i data-lucide="brain-circuit" class="w-16 h-16 text-primary mb-6"></i>
                         <h3 class="text-3xl font-bold text-white mb-4">Federated AI Marketplace</h3>
                         <p class="text-xl text-subtle-text mb-6">
                             We connect AI leaders with the best offers and market needs. A central hub for the most powerful, tested, and integration-ready AI models.
                         </p>
-                        <a href="workspace.html" class="font-semibold text-primary hover:text-primary-hover transition duration-300 text-lg">
+                        <a href="#contact" class="font-semibold text-primary hover:text-primary-hover transition duration-300 text-lg">
                             Access the Hub <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
                         </a>
                     </div>
+                    <!-- Data Hub Card (LINKED TO WORKSPACE.HTML) -->
                     <div class="bg-dark-bg p-10 rounded-2xl border border-gray-800 flex flex-col items-center text-center">
                         <i data-lucide="database-zap" class="w-16 h-16 text-secondary mb-6"></i>
                         <h3 class="text-3xl font-bold text-white mb-4">The Trustful Data Hub</h3>
                         <p class="text-xl text-subtle-text mb-6">
                             The most reliable data collections and analytics platform. Secure, compliant, and verified data to power your most critical business decisions.
                         </p>
-                        <a href="#contact" class="font-semibold text-secondary hover:text-blue-400 transition duration-300 text-lg">
+                        <a href="workspace.html" target="_blank" class="font-semibold text-secondary hover:text-blue-400 transition duration-300 text-lg">
                             Explore Analytics <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
                         </a>
                     </div>
@@ -286,6 +325,7 @@
             </div>
         </section>
         
+        <!-- === IFRAME VENDOR INTEGRATIONS === -->
         <section id="vendor-integrations" class="py-24 bg-dark-bg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Integrated Vendor Solutions</h2>
@@ -294,6 +334,7 @@
                 </p>
 
                 <div class="bg-dark-surface rounded-2xl border border-gray-800 p-4 sm:p-6">
+                    <!-- Tabs for different vendors -->
                     <div class="flex space-x-2 sm:space-x-4 border-b border-gray-700 mb-4">
                         <button class="text-white font-medium py-3 px-4 sm:px-6 border-b-2 border-primary">
                             Salesforce
@@ -309,7 +350,9 @@
                         </button>
                     </div>
                     
+                    <!-- iFrame container -->
                     <div class="w-full h-[600px] bg-dark-bg rounded-lg overflow-hidden">
+                        <!-- === IFRAME BUG FIX: Added srcdoc for a clean placeholder === -->
                         <iframe 
                             title="Vendor Solution Demo"
                             class="w-full h-full border-0"
@@ -324,19 +367,27 @@
                 </div>
             </div>
         </section>
+
+        <!-- Section 4: Industries (UPDATED WITH MOODY LINK) -->
         <section id="industries" class="py-24 bg-dark-surface">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-16">Empowering Global Industries</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Industry: Luxury & Textile -->
                     <div class="bg-dark-bg rounded-2xl overflow-hidden border border-gray-800">
                         <div class="p-8">
                             <i data-lucide="gem" class="w-12 h-12 text-primary mb-4"></i>
                             <h3 class="text-2xl font-bold text-white mb-3">Luxury, Brand & Textile</h3>
-                            <p class="text-subtle-text text-lg">
+                            <p class="text-subtle-text text-lg mb-6">
                                 Deep brand integration, supply chain transparency, and digital passports for the luxury and textile industries.
                             </p>
+                            <!-- === LINK TO MOODY.HTML === -->
+                            <a href="moody.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-hover transition-colors">
+                                Enter Private Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
                         </div>
                     </div>
+                    <!-- Industry: Sports & Luxury Trends -->
                     <div class="bg-dark-bg rounded-2xl overflow-hidden border border-gray-800">
                         <div class="p-8">
                             <i data-lucide="trophy" class="w-12 h-12 text-primary mb-4"></i>
@@ -350,6 +401,7 @@
             </div>
         </section>
 
+        <!-- === DIGITAL PAYMENTS === -->
         <section id="payments" class="py-24 bg-dark-bg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Digital Payments & Integration</h2>
@@ -358,8 +410,10 @@
                 </p>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Payment Options -->
                     <div class="space-y-6">
                         <h3 class="text-3xl font-bold text-white mb-4">Flexible Payment Options</h3>
+                        <!-- Stripe -->
                         <div class="flex items-start p-6 bg-dark-surface rounded-2xl border border-gray-800">
                             <i data-lucide="credit-card" class="w-10 h-10 text-primary mr-5 flex-shrink-0"></i>
                             <div>
@@ -367,6 +421,7 @@
                                 <p class="text-subtle-text">Full support for global credit/debit card processing via Stripe. Simple, secure, and fast.</p>
                             </div>
                         </div>
+                        <!-- PayPal -->
                         <div class="flex items-start p-6 bg-dark-surface rounded-2xl border border-gray-800">
                             <i data-lucide="external-link" class="w-10 h-10 text-secondary mr-5 flex-shrink-0"></i>
                             <div>
@@ -376,6 +431,7 @@
                         </div>
                     </div>
 
+                    <!-- Integration Solution -->
                     <div>
                         <h3 class="text-3xl font-bold text-white mb-4">Simple Integration</h3>
                         <p class="text-lg text-subtle-text mb-6">Use our universal Payment API to connect your backend in minutes. Secure, documented, and reliable.</p>
@@ -401,6 +457,8 @@
                 </div>
             </div>
         </section>
+        
+        <!-- Section 5: About -->
         <section id="about" class="py-24 bg-dark-surface"> 
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-6">We Build for Leaders</h2>
@@ -424,6 +482,7 @@
             </div>
         </section>
 
+        <!-- === ENTERPRISE PARTNERS === -->
         <section id="partners" class="py-24 bg-dark-bg">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Our Enterprise Partners</h2>
@@ -433,6 +492,7 @@
 
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
                     
+                    <!-- Partner: Oracle -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="database" class="w-8 h-8 text-white"></i>
@@ -444,6 +504,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Salesforce -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="cloud" class="w-8 h-8 text-white"></i>
@@ -455,6 +516,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: SAP -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="factory" class="w-8 h-8 text-white"></i>
@@ -466,6 +528,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Databricks -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="database-zap" class="w-8 h-8 text-white"></i>
@@ -477,6 +540,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Microsoft -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="layout-grid" class="w-8 h-8 text-white"></i>
@@ -488,6 +552,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Berexia -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="code-2" class="w-8 h-8 text-white"></i>
@@ -499,6 +564,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Scor -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="shield" class="w-8 h-8 text-white"></i>
@@ -510,6 +576,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Xia -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="bot" class="w-8 h-8 text-white"></i>
@@ -521,6 +588,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Google -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="search" class="w-8 h-8 text-white"></i>
@@ -532,6 +600,7 @@
                         </div>
                     </div>
 
+                    <!-- Partner: Google DeepMind -->
                     <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
                         <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
                             <i data-lucide="brain" class="w-8 h-8 text-white"></i>
@@ -546,7 +615,10 @@
                 </div>
             </div>
         </section>
-        <section id="contact" class="py-24 bg-dark-surface"> <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <!-- Section 6: Contact -->
+        <section id="contact" class="py-24 bg-dark-surface"> 
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-6">Start the Conversation</h2>
                 <p class="text-center text-xl text-subtle-text mb-10">
                     Let's discuss how our platform can be tailored to your precise needs.
@@ -579,7 +651,9 @@
         </section>
     </main>
 
-    <footer class="bg-dark-bg border-t border-gray-800 py-16"> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <!-- Footer -->
+    <footer class="bg-dark-bg border-t border-gray-800 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <a href="#home" class="text-3xl font-bold tracking-tighter mb-4 inline-block">
                 Macropol<span class="text-primary">°</span>s
             </a>
@@ -594,20 +668,25 @@
         </div>
     </footer>
 
-
+    <!-- === CHATBOT === -->
     <div class="fixed bottom-6 right-6 z-50">
+        <!-- Chat Window -->
         <div id="chatbot-window" class="hidden w-80 h-96 bg-dark-surface rounded-xl border border-gray-700 shadow-2xl flex flex-col mb-4 transition-all duration-300 transform translate-y-4 opacity-0">
+            <!-- Header -->
             <div class="flex justify-between items-center p-4 border-b border-gray-700">
                 <h3 class="text-lg font-semibold text-white">Macropol<span class="text-primary">°</span>s Assistant</h3>
                 <button id="close-chatbot" class="text-subtle-text hover:text-white">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
+            <!-- Messages -->
             <div id="chat-messages" class="flex-1 p-4 space-y-4 overflow-y-auto">
                 <div class="p-3 bg-secondary text-white rounded-lg max-w-xs">
                     Hello! How can I assist you with our enterprise solutions today?
                 </div>
-                </div>
+                <!-- More messages would go here -->
+            </div>
+            <!-- Input -->
             <div class="p-4 border-t border-gray-700">
                 <div class="flex items-center bg-dark-bg rounded-lg border border-gray-600">
                     <input type="text" placeholder="Type your message..." class="flex-1 bg-transparent p-3 text-white placeholder-subtle-text focus:outline-none">
@@ -618,10 +697,12 @@
             </div>
         </div>
 
+        <!-- Toggle Button -->
         <button id="chatbot-toggle" class="bg-primary text-dark-bg p-4 rounded-full shadow-lg primary-glow hover:bg-primary-hover transform hover:scale-110 transition-all duration-300">
             <i data-lucide="message-circle" class="w-8 h-8"></i>
         </button>
     </div>
+
     <script>
         // Init Lucide Icons
         lucide.createIcons();
@@ -660,7 +741,7 @@
             }, 5000);
         });
 
-        // === FEATURE 6: CHATBOT SCRIPT ===
+        // === CHATBOT SCRIPT ===
         const chatbotToggle = document.getElementById('chatbot-toggle');
         const chatbotWindow = document.getElementById('chatbot-window');
         const closeChatbot = document.getElementById('close-chatbot');
@@ -684,8 +765,8 @@
 
         chatbotToggle.addEventListener('click', toggleChatbot);
         closeChatbot.addEventListener('click', toggleChatbot);
-        // === END FEATURE 6 SCRIPT ===
 
     </script>
 </body>
 </html>
+
