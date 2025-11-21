@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macropol°s | Gemini Trend Agent</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Chart.js for Analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- Base Theme --- */
+        :root {
+            --bg-color: #050505;
+            --glass: rgba(20, 20, 20, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --primary: #D4AF37; /* Gold */
+            --accent: #3B82F6;  /* Blue */
+            --code-bg: #0d1117;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: #e5e5e5;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* App-like feel */
+        }
+
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* --- Glassmorphism Utilities --- */
+        .glass-panel {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Animations --- */
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scan-effect::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transform: translateY(-100%);
+            animation: scanline 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); }
+        }
+
+        .agent-active {
+            border-color: var(--accent);
+            animation: pulse-glow 2s infinite;
+        }
+
+        /* --- Code Syntax Highlighting Simulation --- */
+        .code-keyword { color: #ff7b72; }
+        .code-string { color: #a5d6ff; }
+        .code-func { color: #d2a8ff; }
+        .code-comment { color: #8b949e; }
+
+        /* --- Layout Transition Classes --- */
+        .hero-mode {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: all 0.5s ease-in-out;
+        }
+
+        .dashboard-mode {
+            display: grid;
+            grid-template-columns: 280px 1fr 350px; /* Sidebar | Main | Code */
+            grid-template-rows: 60px 1fr;
+            height: 100vh;
+            gap: 1px;
+        }
+
+        /* Hide elements in Hero mode */
+        .hero-hidden { display: none; }
+        
+        /* Search Bar Animation */
+        .search-container { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .dashboard-mode .search-container {
+            grid-column: 1 / -1;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            background: rgba(5, 5, 5, 0.9);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LAYOUT CONTAINER -->
+    <div id="app-layout" class="hero-mode bg-[url('https://assets.codepen.io/13471/sparkle-bg.png')] bg-cover">
+        
+        <!-- 1. SEARCH HEADER / HERO INPUT -->
+        <div id="search-wrapper" class="search-container w-full max-w-3xl z-50">
+            <div class="flex flex-col items-center w-full" id="hero-content">
+                <h1 class="text-5xl md:text-7xl font-bold mb-2 tracking-tighter text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Gemini</span> Agent Market</h1>
+                <p class="text-gray-400 mb-8 tracking-widest uppercase text-xs">Predictive Intelligence • Live Backend Telemetry</p>
+            </div>
+
+            <!-- The Input Field -->
+            <div class="relative w-full group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i data-lucide="search" class="text-gray-500 group-focus-within:text-blue-400 transition-colors"></i>
+                </div>
+                <input type="text" id="trend-input" 
+                    class="w-full bg-black/60 backdrop-blur-xl border border-gray-700 text-white text-lg rounded-full py-4 pl-12 pr-24 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all shadow-2xl"
+                    placeholder="Enter trend keyword (e.g., 'Sustainable Luxury', 'Quantum Computing')..."
+                    autocomplete="off">
+                <button onclick="activateAgent()" class="absolute right-2 top-2 bottom-2 bg-blue-600 hover:bg-blue-500 text-white px-6 rounded-full font-semibold transition-colors">
+                    Predict
+                </button>
+            </div>
+            
+            <!-- Quick Tags (Hero Only) -->
+            <div class="flex gap-3 mt-6 justify-center" id="quick-tags">
+                <button onclick="fillInput('Generative Fashion')" class="px-4 py-1 rounded-full border border-white/10 text-xs text-gray-400 hover:border-blue-500 hover:text-white transition">Generative Fashion</button>
+                <button onclick="fillInput('Carbon Neutral Logistics')" class="px-4 py-1 rounded-full border border-white/10 text-xs text-gray-400 hover:border-blue-500 hover:text-white transition">Carbon Neutral Logistics</button>
+                <button onclick="fillInput('Bio-Textiles')" class="px-4 py-1 rounded-full border border-white/10 text-xs text-gray-400 hover:border-blue-500 hover:text-white transition">Bio-Textiles</button>
+            </div>
+        </div>
+
+        <!-- 2. LEFT SIDEBAR: AGENT GENERATION (Hidden in Hero) -->
+        <aside class="hero-hidden bg-black/40 backdrop-blur-lg border-r border-white/10 p-6 flex-col overflow-y-auto">
+            <div class="mb-8">
+                <div class="text-xs font-bold text-blue-500 uppercase tracking-widest mb-2">Agent Status</div>
+                <div id="agent-card" class="glass-panel p-4 rounded-xl opacity-50 transition-all duration-500">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center">
+                            <i data-lucide="bot" class="text-white w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <div class="text-white font-bold text-sm">Gemini-Pro-Vision</div>
+                            <div class="text-xs text-green-400 flex items-center"><span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></span> Online</div>
+                        </div>
+                    </div>
+                    <div class="space-y-2 text-xs font-mono text-gray-400">
+                        <div class="flex justify-between"><span>Model:</span> <span class="text-white">v1.5-Flash</span></div>
+                        <div class="flex justify-between"><span>Latency:</span> <span class="text-white">12ms</span></div>
+                        <div class="flex justify-between"><span>Confidence:</span> <span class="text-white">98.2%</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div>
+                    <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Parameter Tuning</div>
+                    <input type="range" class="w-full h-1 bg-gray-700 rounded-lg appearance-none cursor-pointer mb-2">
+                    <div class="flex justify-between text-xs text-gray-400"><span>Conservative</span><span>Creative</span></div>
+                </div>
+
+                <div>
+                    <div class="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Data Sources</div>
+                    <div class="flex flex-col gap-2">
+                        <label class="flex items-center gap-2 text-sm text-gray-300 p-2 rounded hover:bg-white/5 cursor-pointer">
+                            <input type="checkbox" checked class="accent-blue-500"> Google Search Index
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-gray-300 p-2 rounded hover:bg-white/5 cursor-pointer">
+                            <input type="checkbox" checked class="accent-blue-500"> Social Sentiment
+                        </label>
+                        <label class="flex items-center gap-2 text-sm text-gray-300 p-2 rounded hover:bg-white/5 cursor-pointer">
+                            <input type="checkbox" checked class="accent-blue-500"> Academic Papers
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 3. CENTER PANEL: INTERACTIVE DASHBOARD (Hidden in Hero) -->
+        <main class="hero-hidden bg-black/20 p-6 flex-col gap-6 overflow-y-auto relative">
+            <!-- Header Stats -->
+            <div class="grid grid-cols-3 gap-4">
+                <div class="glass-panel p-4 rounded-xl border-t-2 border-blue-500">
+                    <div class="text-gray-400 text-xs uppercase">Search Volume</div>
+                    <div class="text-2xl font-bold text-white mt-1" id="stat-volume">0</div>
+                    <div class="text-green-400 text-xs mt-1 flex items-center"><i data-lucide="trending-up" class="w-3 h-3 mr-1"></i> +14% this week</div>
+                </div>
+                <div class="glass-panel p-4 rounded-xl border-t-2 border-purple-500">
+                    <div class="text-gray-400 text-xs uppercase">Market Sentiment</div>
+                    <div class="text-2xl font-bold text-white mt-1" id="stat-sentiment">Neutral</div>
+                    <div class="text-blue-400 text-xs mt-1">AI Analysis Complete</div>
+                </div>
+                <div class="glass-panel p-4 rounded-xl border-t-2 border-gold">
+                    <div class="text-gray-400 text-xs uppercase">Prediction Score</div>
+                    <div class="text-2xl font-bold text-white mt-1" id="stat-score">--</div>
+                    <div class="text-gray-500 text-xs mt-1">Confidence Interval</div>
+                </div>
+            </div>
+
+            <!-- Main Chart -->
+            <div class="glass-panel p-6 rounded-xl flex-1 min-h-[300px] relative scan-effect">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-white font-bold">Real-Time Trend Projection</h3>
+                    <div class="flex gap-2">
+                        <span class="w-3 h-3 rounded-full bg-blue-500"></span> <span class="text-xs text-gray-400">Historical</span>
+                        <span class="w-3 h-3 rounded-full bg-purple-500 ml-2"></span> <span class="text-xs text-gray-400">Gemini Predicted</span>
+                    </div>
+                </div>
+                <div class="h-full w-full">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Live Activity Map (Simulation) -->
+            <div class="grid grid-cols-2 gap-4 h-48">
+                <div class="glass-panel p-4 rounded-xl relative overflow-hidden">
+                    <div class="text-xs text-gray-400 uppercase mb-2">Regional Interest</div>
+                    <!-- CSS Map Representation -->
+                    <div class="absolute inset-0 opacity-30 flex items-center justify-center">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" class="w-full filter invert" style="filter: invert(1) opacity(0.2);">
+                    </div>
+                    <!-- Animated Dots -->
+                    <div class="absolute top-1/2 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
+                    <div class="absolute top-1/3 left-1/2 w-2 h-2 bg-blue-400 rounded-full animate-ping" style="animation-delay: 0.5s"></div>
+                    <div class="absolute bottom-1/3 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping" style="animation-delay: 1s"></div>
+                </div>
+                
+                <div class="glass-panel p-4 rounded-xl overflow-hidden flex flex-col">
+                    <div class="text-xs text-gray-400 uppercase mb-2">Related Queries</div>
+                    <div class="space-y-2 flex-1 overflow-y-auto font-mono text-xs" id="related-queries">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 4. RIGHT SIDEBAR: EXPLICIT BACKEND (CODE/SQL) (Hidden in Hero) -->
+        <aside class="hero-hidden bg-[#0d1117] border-l border-white/10 flex flex-col">
+            <!-- Tab Bar -->
+            <div class="flex border-b border-white/10 bg-black">
+                <button onclick="switchTab('sql')" id="tab-sql" class="px-4 py-2 text-xs font-bold text-white border-b-2 border-blue-500 hover:bg-white/5 transition">SQL Query</button>
+                <button onclick="switchTab('python')" id="tab-python" class="px-4 py-2 text-xs font-bold text-gray-500 hover:text-white hover:bg-white/5 transition">Python / ML</button>
+                <button class="px-4 py-2 text-xs font-bold text-gray-500 hover:text-white hover:bg-white/5 transition">Logs</button>
+            </div>
+
+            <!-- Terminal Window -->
+            <div class="flex-1 p-4 font-mono text-xs overflow-y-auto custom-scrollbar relative group">
+                
+                <!-- Loading Indicator -->
+                <div id="code-loading" class="hidden absolute top-4 right-4">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse inline-block"></span> Processing...
+                </div>
+
+                <!-- SQL View -->
+                <div id="view-sql" class="h-full">
+                    <div class="text-gray-500 mb-2">// Connecting to Macropol°s Data Warehouse...</div>
+                    <div id="sql-content" class="whitespace-pre-wrap text-gray-300"></div>
+                    <div id="sql-cursor" class="w-2 h-4 bg-green-500 inline-block animate-pulse"></div>
+                </div>
+
+                <!-- Python View -->
+                <div id="view-python" class="h-full hidden">
+                    <div class="text-gray-500 mb-2"># Initializing TensorFlow Agent v2.4</div>
+                    <div id="python-content" class="whitespace-pre-wrap text-gray-300"></div>
+                </div>
+
+            </div>
+
+            <!-- Database Status Footer -->
+            <div class="h-8 bg-black border-t border-white/10 flex items-center px-3 justify-between text-[10px] text-gray-500">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="database" class="w-3 h-3"></i> bigquery-public-data
+                </div>
+                <div>Latency: 45ms</div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        let chartInstance = null;
+
+        // --- 1. Layout & Animation Logic ---
+        function activateAgent() {
+            const input = document.getElementById('trend-input').value;
+            if (!input) return;
+
+            // 1. Transform UI
+            const layout = document.getElementById('app-layout');
+            const heroContent = document.getElementById('hero-content');
+            const quickTags = document.getElementById('quick-tags');
+            const agentCard = document.getElementById('agent-card');
+
+            heroContent.style.opacity = '0';
+            quickTags.style.display = 'none';
+            
+            setTimeout(() => {
+                heroContent.style.display = 'none';
+                layout.classList.remove('hero-mode');
+                layout.classList.add('dashboard-mode');
+                
+                // Reveal Hidden Panels
+                document.querySelectorAll('.hero-hidden').forEach(el => {
+                    el.classList.remove('hero-hidden');
+                    el.classList.add('animate-fade-in'); // You can add CSS animation here
+                });
+
+                // Activate Agent Visuals
+                agentCard.classList.remove('opacity-50');
+                agentCard.classList.add('agent-active');
+
+                // 2. Start Simulation
+                runSimulation(input);
+
+            }, 400);
+        }
+
+        function fillInput(text) {
+            document.getElementById('trend-input').value = text;
+        }
+
+        // --- 2. Backend Simulation (Typewriter Effect) ---
+        const sqlTemplate = (keyword) => `
+<span class="code-keyword">SELECT</span> 
+    t.timestamp,
+    t.search_volume,
+    t.sentiment_score,
+    p.prediction_val
+<span class="code-keyword">FROM</span> \`macropolos.global_trends.live_stream\` t
+<span class="code-keyword">JOIN</span> \`macropolos.ai_models.predictions\` p 
+    <span class="code-keyword">ON</span> t.trend_id = p.trend_id
+<span class="code-keyword">WHERE</span> 
+    t.keyword <span class="code-keyword">LIKE</span> <span class="code-string">'%${keyword}%'</span>
+    <span class="code-keyword">AND</span> t.region <span class="code-keyword">IN</span> (<span class="code-string">'US'</span>, <span class="code-string">'EU'</span>, <span class="code-string">'APAC'</span>)
+    <span class="code-keyword">AND</span> t.timestamp > <span class="code-func">TIMESTAMP_SUB</span>(<span class="code-func">CURRENT_TIMESTAMP</span>(), INTERVAL 7 DAY)
+<span class="code-keyword">ORDER BY</span> t.timestamp <span class="code-keyword">DESC</span>
+<span class="code-keyword">LIMIT</span> 1000;`;
+
+        const pythonTemplate = (keyword) => `
+<span class="code-keyword">import</span> tensorflow <span class="code-keyword">as</span> tf
+<span class="code-keyword">from</span> macropolos.agents <span class="code-keyword">import</span> TrendForecaster
+
+<span class="code-comment"># Initialize Gemini Context</span>
+agent = TrendForecaster(model=<span class="code-string">"gemini-1.5-pro"</span>)
+
+<span class="code-comment"># Fetch Vector Embeddings</span>
+vectors = agent.embed(<span class="code-string">"${keyword}"</span>)
+
+<span class="code-comment"># Run Prediction Sequence</span>
+prediction = agent.predict_next_cycle(
+    inputs=vectors,
+    horizon=<span class="code-func">days</span>(30),
+    confidence_threshold=0.95
+)
+
+<span class="code-keyword">print</span>(f<span class="code-string">"Projected Growth: {prediction.growth_factor}"</span>)
+<span class="code-func">return</span> prediction.render_chart()`;
+
+        async function typeWriter(elementId, htmlContent) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = ''; // Clear
+            document.getElementById('code-loading').classList.remove('hidden');
+            
+            // Simple simulation: split by lines for speed, but insert HTML directly
+            // In reality, proper typing of HTML tags is hard, so we'll just dump the formatted HTML 
+            // with a small delay to simulate "processing"
+            
+            el.innerHTML = htmlContent; 
+            document.getElementById('code-loading').classList.add('hidden');
+        }
+
+        // --- 3. Dashboard Simulation ---
+        function runSimulation(keyword) {
+            // Update Code Panels
+            typeWriter('sql-content', sqlTemplate(keyword));
+            typeWriter('python-content', pythonTemplate(keyword));
+
+            // Update Stats
+            const randomVol = Math.floor(Math.random() * 50000) + 12000;
+            animateValue("stat-volume", 0, randomVol, 2000);
+            
+            document.getElementById('stat-sentiment').innerText = Math.random() > 0.5 ? "Positive" : "Volatile";
+            document.getElementById('stat-score').innerText = (Math.random() * (9.9 - 7.5) + 7.5).toFixed(1) + "/10";
+
+            // Populate Related Queries
+            const queries = [
+                `future of ${keyword}`,
+                `${keyword} market size 2025`,
+                `investing in ${keyword}`,
+                `${keyword} regulations`,
+                `top companies in ${keyword}`
+            ];
+            const queriesContainer = document.getElementById('related-queries');
+            queriesContainer.innerHTML = queries.map(q => 
+                `<div class="p-2 hover:bg-white/5 rounded cursor-pointer flex justify-between">
+                    <span>${q}</span> <span class="text-green-500">+${Math.floor(Math.random()*100)}%</span>
+                </div>`
+            ).join('');
+
+            // Render Chart
+            renderChart(keyword);
+        }
+
+        function animateValue(id, start, end, duration) {
+            const obj = document.getElementById(id);
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                obj.innerHTML = Math.floor(progress * (end - start) + start).toLocaleString();
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        function renderChart(label) {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            
+            // Generate Fake Data
+            const historicalData = Array.from({length: 12}, () => Math.floor(Math.random() * 50) + 20).sort((a,b)=>a-b);
+            const predictiveData = [...Array(11).fill(null), historicalData[historicalData.length-1], ...Array.from({length: 5}, (_, i) => historicalData[historicalData.length-1] + (i+1)*10 + Math.random()*5)];
+
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan (Pred)', 'Feb (Pred)', 'Mar (Pred)', 'Apr (Pred)'];
+
+            if (chartInstance) chartInstance.destroy();
+
+            chartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Historical Volume',
+                            data: historicalData,
+                            borderColor: '#3B82F6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'AI Prediction',
+                            data: predictiveData,
+                            borderColor: '#A855F7', // Purple
+                            borderDash: [5, 5],
+                            backgroundColor: 'rgba(168, 85, 247, 0.0)',
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#666' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#666' }
+                        }
+                    },
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    }
+                }
+            });
+        }
+
+        function switchTab(tab) {
+            // Reset styles
+            document.getElementById('tab-sql').className = "px-4 py-2 text-xs font-bold text-gray-500 hover:text-white hover:bg-white/5 transition";
+            document.getElementById('tab-python').className = "px-4 py-2 text-xs font-bold text-gray-500 hover:text-white hover:bg-white/5 transition";
+            document.getElementById('view-sql').classList.add('hidden');
+            document.getElementById('view-python').classList.add('hidden');
+
+            // Set Active
+            document.getElementById(`tab-${tab}`).className = "px-4 py-2 text-xs font-bold text-white border-b-2 border-blue-500 hover:bg-white/5 transition";
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
+
