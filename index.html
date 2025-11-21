@@ -1,36 +1,117 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="scroll-smooth overflow-x-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Macropol°s | The Architecture of Tomorrow's Business</title>
+    <title>Macropol°s | The Architecture of Tomorrow</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Inter Font (Apple-like) -->
+    <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Base styles */
+        /* Global Reset & Typography */
+        :root {
+            --primary: #D4AF37;
+            --bg-dark: #050505;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0D0D0D; /* Near black */
+            background-color: var(--bg-dark);
             color: #E0E0E0;
+            overflow-x: hidden; /* Critical fix for right-side black space */
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
-        /* Custom "glow" effect for primary elements */
-        .primary-glow {
-            box-shadow: 0 0 15px 5px rgba(212, 175, 55, 0.1), 0 0 5px 1px rgba(212, 175, 55, 0.1);
-        }
-        /* Hide scrollbar for chatbot */
-        #chat-messages::-webkit-scrollbar { display: none; }
-        #chat-messages { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Style for video background */
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* --- Apple-Style Glassmorphism --- */
+        .glass-panel {
+            background: rgba(20, 20, 20, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        .glass-panel:hover {
+            background: rgba(30, 30, 30, 0.7);
+            border-color: rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        }
+
+        /* --- Apple-Style Transparent Section --- */
+        .apple-section {
+            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to right, #D4AF37, #FFE58F, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        /* --- Infinite Scroll Marquee --- */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        
+        .marquee-container::before, .marquee-container::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 2;
+        }
+        .marquee-container::before { left: 0; background: linear-gradient(to right, #050505, transparent); }
+        .marquee-container::after { right: 0; background: linear-gradient(to left, #050505, transparent); }
+
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 40s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Reveal Animation --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Video Background Styling */
         #hero-video {
             position: absolute;
             top: 50%;
@@ -39,7 +120,7 @@
             height: 100%;
             object-fit: cover;
             transform: translate(-50%, -50%);
-            z-index: 0;
+            opacity: 0.5;
         }
     </style>
 
@@ -47,726 +128,383 @@
         tailwind.config = {
             theme: {
                 extend: {
+                    colors: {
+                        'dark-bg': '#050505',
+                        'primary': '#D4AF37',
+                        'secondary': '#2563EB',
+                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        'dark-bg': '#0D0D0D', // Near black
-                        'dark-surface': '#1A1A1A', // Off-black for cards
-                        'primary': '#D4AF37', // Luxurious Gold
-                        'primary-hover': '#E0C56A',
-                        'secondary': '#2563EB', // Deep B2B Blue
-                        'light-text': '#E0E0E0', // Main text
-                        'subtle-text': '#A0A0A0', // Secondary text
-                    },
-                    animation: {
-                        'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
-                    },
-                    keyframes: {
-                        'fade-in-up': {
-                            '0%': { opacity: '0', transform: 'translateY(30px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
+                        serif: ['Playfair Display', 'serif'],
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-dark-bg text-light-text">
+<body class="bg-dark-bg">
 
-    <!-- Header / Navigation -->
-    <header class="fixed top-0 left-0 w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-gray-800">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-            <!-- Logo -->
-            <a href="#home" class="text-3xl font-bold tracking-tighter">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-dark-bg/70 backdrop-blur-xl">
+        <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold tracking-tighter text-white">
                 Macropol<span class="text-primary">°</span>s
             </a>
             
             <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#solutions" class="text-subtle-text hover:text-white transition duration-300">Solutions</a>
-                <a href="#hubs" class="text-subtle-text hover:text-white transition duration-300">AI & Data Hubs</a>
-                <a href="#partners" class="text-subtle-text hover:text-white transition duration-300">Partners</a>
-                <a href="#about" class="text-subtle-text hover:text-white transition duration-300">About Us</a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#showcase" class="text-sm font-medium text-gray-400 hover:text-white transition">Showcase</a>
+                <a href="#solutions" class="text-sm font-medium text-gray-400 hover:text-white transition">Ecosystem</a>
+                <a href="#hubs" class="text-sm font-medium text-gray-400 hover:text-white transition">Hubs</a>
+                <a href="#partners" class="text-sm font-medium text-gray-400 hover:text-white transition">Partners</a>
                 
-                <!-- === USER AUTH === -->
-                <a href="#login" class="text-subtle-text hover:text-white transition duration-300">Log In</a>
-                <a href="#signup" class="border border-subtle-text text-subtle-text px-5 py-2.5 rounded-full font-medium hover:text-white hover:border-white transition duration-300">
-                    Sign Up
-                </a>
+                <div class="h-4 w-px bg-white/10"></div>
 
-                <a href="#contact" class="bg-primary text-dark-bg px-5 py-2.5 rounded-full font-medium hover:bg-primary-hover transition duration-300 shadow-lg primary-glow">
-                    Contact Sales
+                <a href="#login" class="text-sm font-medium text-white">Log in</a>
+                <a href="#contact" class="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-gray-200 transition shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+                    Contact
                 </a>
             </div>
             
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden p-2 rounded-md text-subtle-text hover:text-white">
+            <!-- Mobile Menu Icon -->
+            <button id="menu-btn" class="md:hidden text-white">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-dark-surface border-t border-gray-800">
-            <a href="#solutions" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Solutions</a>
-            <a href="#hubs" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">AI & Data Hubs</a>
-            <a href="#partners" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Partners</a>
-            <a href="#about" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">About Us</a>
-            
-            <!-- === USER AUTH (MOBILE) === -->
-            <a href="#login" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Log In</a>
-            <a href="#signup" class="block py-3 px-4 text-lg hover:bg-gray-800" onclick="toggleMenu()">Sign Up</a>
 
-            <a href="#contact" class="block py-3 px-4 text-lg bg-primary/20 text-primary hover:bg-primary/30" onclick="toggleMenu()">Contact Sales</a>
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-50 hidden flex-col items-center justify-center space-y-8 transition-opacity duration-300">
+            <button onclick="toggleMenu()" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
+            <a href="#showcase" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Showcase</a>
+            <a href="#solutions" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Ecosystem</a>
+            <a href="#hubs" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Data Hubs</a>
+            <a href="#contact" class="text-primary text-xl tracking-widest uppercase" onclick="toggleMenu()">Contact Sales</a>
         </div>
     </header>
 
     <main>
-        <!-- Section 1: Hero -->
-        <section id="home" class="min-h-screen flex items-center pt-20 relative overflow-hidden">
-            
-            <!-- === 4K VIDEO BACKGROUND === -->
-            <video id="hero-video" autoplay loop muted playsinline poster="https://via.placeholder.com/1920x1080.png?text=Loading+Video...">
-                <source src="https://videos.pexels.com/video-files/3254013/3254013-hd_1920_1080_25fps.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-            <!-- Dark Overlay -->
-            <div class="absolute top-0 left-0 w-full h-full bg-dark-bg/60 z-1"></div>
-            <!-- === END 4K VIDEO BACKGROUND === -->
+        <!-- Section 1: Cinematic Hero -->
+        <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-black z-0">
+                <!-- 4K Video -->
+                <video id="hero-video" autoplay loop muted playsinline>
+                    <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4" type="video/mp4">
+                </video>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-dark-bg z-10"></div>
+            </div>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tighter text-white mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
-                    The Architecture
-                    <br>
-                    of Tomorrow's <span class="text-primary">Business</span>.
+            <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-16">
+                <div class="inline-block border border-white/20 rounded-full px-4 py-1 mb-6 backdrop-blur-sm bg-white/5 reveal">
+                    <span class="text-primary text-xs font-bold tracking-widest uppercase">The New Standard</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white mb-6 leading-[1.1] reveal delay-100">
+                    The Architecture <br> of <span class="text-gradient-gold italic serif font-normal">Sovereignty</span>.
                 </h1>
-                <p class="max-w-3xl mx-auto text-xl md:text-2xl text-subtle-text mb-10 animate-fade-in-up" style="animation-delay: 0.4s;">
-                    Macropol°s builds intelligent, scalable B2B ecosystems—from advanced logistics optimization to a federated AI marketplace.
+                <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-300 mb-10 font-light leading-relaxed reveal delay-200">
+                    Macropol°s is the operating system for the ultra-enterprise. 
+                    From federated AI to bespoke logistics, we engineer the invisible infrastructure of power.
                 </p>
-                <div class="flex justify-center items-center gap-4 animate-fade-in-up" style="animation-delay: 0.6s;">
-                    <!-- === LINK TO CATALOG === -->
-                    <a href="#catalog" class="bg-primary text-dark-bg px-8 py-4 rounded-full font-semibold text-lg hover:bg-primary-hover transition duration-300 shadow-lg primary-glow transform hover:scale-105">
-                        Explore Solutions
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 reveal delay-300">
+                    <a href="#showcase" class="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition duration-300">
+                        Explore the Vision
                     </a>
-                    <a href="#contact" class="border border-subtle-text text-subtle-text px-8 py-4 rounded-full font-semibold text-lg hover:text-white hover:border-white transition duration-300 transform hover:scale-105">
-                        Request Consult
+                    <a href="#contact" class="w-full sm:w-auto glass-panel text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white/10">
+                        Request Access
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- === LUXURY PRODUCT CATALOG === -->
-        <section id="catalog" class="py-24 bg-dark-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Luxury Product Showcase</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    A curated selection of high-end partner products and digital assets, fully integrated into the Macropol°s ecosystem.
-                </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Product Card 1 -->
-                    <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
-                        <!-- === 8K PHOTO PLACEHOLDER === -->
-                        <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(Chronograph)" alt="8K placeholder for Aura Chronograph" class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold text-white mb-2">Aura Chronograph 18k</h3>
-                            <p class="text-subtle-text mb-4">Limited edition timepiece with digital passport integration.</p>
-                            <a href="#" class="font-semibold text-primary text-lg hover:text-primary-hover transition duration-300">
-                                View Details <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Product Card 2 -->
-                    <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
-                        <!-- === 8K PHOTO PLACEHOLDER === -->
-                        <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(Gown)" alt="8K placeholder for Atelier Silk Gown" class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold text-white mb-2">Atelier Silk Gown</h3>
-                            <p class="text-subtle-text mb-4">Bespoke digital tailoring powered by our textile AI.</p>
-                            <a href="#" class="font-semibold text-primary text-lg hover:text-primary-hover transition duration-300">
-                                View Details <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!-- Product Card 3 -->
-                    <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden group">
-                        <!-- === 8K PHOTO PLACEHOLDER === -->
-                        <img src="https://via.placeholder.com/1200x800.png?text=8K+Placeholder+(NFT)" alt="8K placeholder for Vector-9 Origin NFT" class="w-full h-64 object-cover">
-                        <div class="p-6">
-                            <h3 class="text-2xl font-bold text-white mb-2">Vector-9 'Origin' NFT</h3>
-                            <p class="text-subtle-text mb-4">Digital twin & ownership certificate for the Vector-9 concept.</p>
-                            <a href="#" class="font-semibold text-primary text-lg hover:text-primary-hover transition duration-300">
-                                View Details <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Section 2: The Visionary Showcase (Reinvented Aura Section) -->
+        <section id="showcase" class="relative py-32 apple-section overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+            
+            <!-- Background Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <!-- Section 2: Core Solutions -->
-        <section id="solutions" class="py-24 bg-dark-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Integrated B2B Ecosystems</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    We don't just provide software. We build the operating system for your industry.
-                </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    <!-- Solution Card 1: Logistics -->
-                    <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-primary">
-                        <i data-lucide="map-pin" class="w-12 h-12 text-primary mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-3">Dynamic Logistics Optimization</h3>
-                        <p class="text-subtle-text text-lg">Uber-like mapping, real-time fleet management, and predictive routing for enterprise-grade delivery and logistics networks.</p>
-                    </div>
-                    <!-- Solution Card 2: Cartography -->
-                    <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-primary">
-                        <i data-lucide="compass" class="w-12 h-12 text-primary mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-3">Architectural & GIS Cartography</h3>
-                        <p class="text-subtle-text text-lg">High-precision 3D mapping and spatial data solutions for architects, urban planners, and real estate developers.</p>
-                    </div>
-                    <!-- Solution Card 3: CRM -->
-                    <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-secondary">
-                        <i data-lucide="users" class="w-12 h-12 text-secondary mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-3">Bespoke Client Relationship Mgmt</h3>
-                        <p class="text-subtle-text text-lg">Intelligent CRM platforms tailored for complex B2B sales cycles, long-term client nurturing, and deep data analytics.</p>
-                    </div>
-                    <!-- Solution Card 4: ERP -->
-                    <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 transition-all duration-300 hover:border-secondary">
-                        <i data-lucide="factory" class="w-12 h-12 text-secondary mb-4"></i>
-                        <h3 class="text-2xl font-bold text-white mb-3">Industrial-Grade ERP</h3>
-                        <p class="text-subtle-text text-lg">Holistic Enterprise Resource Planning for manufacturing, textile supply chains, and industrial automation. Full visibility, from raw material to end-user.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === ELEGANT CRM FORUM === -->
-        <section id="crm-forum" class="py-24 bg-dark-bg">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Bespoke CRM: Community & Support</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    An elegant, private forum for our bespoke CRM clients. Share insights, request features, and connect with peers.
-                </p>
-
-                <div class="bg-dark-surface p-6 sm:p-8 rounded-2xl border border-gray-800">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-2xl font-bold text-white">General Discussion</h3>
-                        <button class="bg-secondary text-white px-5 py-2.5 rounded-full font-medium hover:bg-blue-500 transition duration-300">
-                            <i data-lucide="plus" class="inline w-5 h-5 -ml-1 mr-1"></i> New Post
-                        </button>
-                    </div>
-
-                    <!-- Forum Post List -->
-                    <div class="space-y-4">
-                        <!-- Post 1 -->
-                        <div class="flex flex-col sm:flex-row p-5 bg-dark-bg rounded-lg border border-gray-700 hover:border-secondary transition duration-300">
-                            <div class="flex-shrink-0 flex items-center mb-3 sm:mb-0 sm:mr-5">
-                                <i data-lucide="bar-chart-3" class="w-8 h-8 text-secondary mr-3"></i>
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">42</span>
-                                    <span class="text-sm text-subtle-text">Replies</span>
-                                </div>
-                            </div>
-                            <div class="flex-grow">
-                                <a href="#" class="text-xl font-semibold text-white hover:text-primary transition duration-300">Best practices for Q4 client nurturing sequence?</a>
-                                <p class="text-subtle-text mt-1">Started by <span class="text-primary-hover">Anna DeVere</span> (Acme Luxury) 3 hours ago</p>
-                            </div>
-                        </div>
-                        <!-- Post 2 -->
-                        <div class="flex flex-col sm:flex-row p-5 bg-dark-bg rounded-lg border border-gray-700 hover:border-secondary transition duration-300">
-                            <div class="flex-shrink-0 flex items-center mb-3 sm:mb-0 sm:mr-5">
-                                <i data-lucide="loader" class="w-8 h-8 text-secondary mr-3"></i>
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">18</span>
-                                    <span class="text-sm text-subtle-text">Replies</span>
-                                </div>
-                            </div>
-                            <div class="flex-grow">
-                                <a href="#" class="text-xl font-semibold text-white hover:text-primary transition duration-300">[Feature Request] AI-powered lead scoring adjustment</a>
-                                <p class="text-subtle-text mt-1">Started by <span class="text-primary-hover">Marcus Cole</span> (Global Logistics) 8 hours ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: AI & Data Hubs -->
-        <section id="hubs" class="py-24 bg-dark-surface"> 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-16">The Nexus of AI & Data</h2>
-                
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- AI Hub Card -->
-                    <div class="bg-dark-bg p-10 rounded-2xl border border-gray-800 flex flex-col items-center text-center">
-                        <i data-lucide="brain-circuit" class="w-16 h-16 text-primary mb-6"></i>
-                        <h3 class="text-3xl font-bold text-white mb-4">Federated AI Marketplace</h3>
-                        <p class="text-xl text-subtle-text mb-6">
-                            We connect AI leaders with the best offers and market needs. A central hub for the most powerful, tested, and integration-ready AI models.
-                        </p>
-                        <a href="#contact" class="font-semibold text-primary hover:text-primary-hover transition duration-300 text-lg">
-                            Access the Hub <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
-                        </a>
-                    </div>
-                    <!-- Data Hub Card (LINKED TO WORKSPACE.HTML) -->
-                    <div class="bg-dark-bg p-10 rounded-2xl border border-gray-800 flex flex-col items-center text-center">
-                        <i data-lucide="database-zap" class="w-16 h-16 text-secondary mb-6"></i>
-                        <h3 class="text-3xl font-bold text-white mb-4">The Trustful Data Hub</h3>
-                        <p class="text-xl text-subtle-text mb-6">
-                            The most reliable data collections and analytics platform. Secure, compliant, and verified data to power your most critical business decisions.
-                        </p>
-                        <a href="workspace.html" target="_blank" class="font-semibold text-secondary hover:text-blue-400 transition duration-300 text-lg">
-                            Explore Analytics <i data-lucide="arrow-right" class="inline w-5 h-5"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- === IFRAME VENDOR INTEGRATIONS === -->
-        <section id="vendor-integrations" class="py-24 bg-dark-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Integrated Vendor Solutions</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    Bring your existing tools. Our platform seamlessly integrates with industry-leading vendor solutions via secure iFrame and API protocols.
-                </p>
-
-                <div class="bg-dark-surface rounded-2xl border border-gray-800 p-4 sm:p-6">
-                    <!-- Tabs for different vendors -->
-                    <div class="flex space-x-2 sm:space-x-4 border-b border-gray-700 mb-4">
-                        <button class="text-white font-medium py-3 px-4 sm:px-6 border-b-2 border-primary">
-                            Salesforce
-                        </button>
-                        <button class="text-subtle-text hover:text-white font-medium py-3 px-4 sm:px-6 transition duration-300">
-                            SAP
-                        </button>
-                        <button class="text-subtle-text hover:text-white font-medium py-3 px-4 sm:px-6 transition duration-300">
-                            HubSpot
-                        </button>
-                        <button class="text-subtle-text hover:text-white font-medium py-3 px-4 sm:px-6 transition duration-300">
-                            Oracle
-                        </button>
-                    </div>
-                    
-                    <!-- iFrame container -->
-                    <div class="w-full h-[600px] bg-dark-bg rounded-lg overflow-hidden">
-                        <!-- === IFRAME BUG FIX: Added srcdoc for a clean placeholder === -->
-                        <iframe 
-                            title="Vendor Solution Demo"
-                            class="w-full h-full border-0"
-                            sandbox
-                            srcdoc="<html style='background-color:#0D0D0D; color:#A0A0A0; display:flex; align-items:center; justify-content:center; height:100%; font-family:Inter, sans-serif; font-size:1.2rem;'><body><p>Vendor integration module loads here.</p></body></html>"
-                        >
-                        </iframe>
-                    </div>
-                    <p class="text-center text-subtle-text text-sm mt-4">
-                        Live integration demo. Content is sandboxed from the vendor's domain.
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="text-center mb-20 reveal">
+                    <h2 class="text-4xl md:text-6xl font-bold text-gradient mb-6">Aura. Redefined.</h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light">
+                        Experience the intersection of digital scarcity and physical mastery. 
+                        Our "Aura" line integrates blockchain provenance directly into the atomic structure of luxury.
                     </p>
                 </div>
+
+                <!-- Featured Product: Large Apple Style Layout -->
+                <div class="relative w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl overflow-hidden border border-white/10 group reveal delay-100">
+                    <!-- High-End Background Image -->
+                    <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=2574&auto=format&fit=crop" 
+                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105" 
+                         alt="Luxury Watch Movement">
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+
+                    <!-- Floating Content -->
+                    <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 flex flex-col md:flex-row justify-between items-end">
+                        <div class="max-w-lg mb-8 md:mb-0">
+                            <div class="text-primary text-sm tracking-[0.3em] uppercase mb-2 font-bold">The Chronograph</div>
+                            <h3 class="text-4xl md:text-5xl text-white mb-4 font-serif italic">Aura 18k</h3>
+                            <p class="text-gray-300 mb-6 text-lg">
+                                Swiss mechanics meeting Silicon Valley cryptography. 
+                                Each movement is paired with a non-fungible digital twin, ensuring eternal provenance.
+                            </p>
+                            <a href="moody.html" class="inline-flex items-center text-white border-b border-primary pb-1 hover:text-primary transition">
+                                Enter Private Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            </a>
+                        </div>
+                        
+                        <!-- Glass Spec Card -->
+                        <div class="glass-panel p-6 rounded-2xl w-full md:w-auto flex gap-8">
+                            <div class="text-center">
+                                <div class="text-2xl text-white font-bold">18k</div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">Gold</div>
+                            </div>
+                            <div class="w-px bg-white/10"></div>
+                            <div class="text-center">
+                                <div class="text-2xl text-white font-bold">NFT</div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">Verified</div>
+                            </div>
+                            <div class="w-px bg-white/10"></div>
+                            <div class="text-center">
+                                <div class="text-2xl text-white font-bold">0.0s</div>
+                                <div class="text-xs text-gray-500 uppercase tracking-wider">Latency</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Section 4: Industries (UPDATED WITH MOODY LINK) -->
-        <section id="industries" class="py-24 bg-dark-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-16">Empowering Global Industries</h2>
+        <!-- Section 3: Interactive Solutions Grid -->
+        <section id="solutions" class="py-32 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                    <div>
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">The Ecosystem</h2>
+                        <p class="text-gray-400 max-w-md">An integrated suite of enterprise-grade modules designed for the modern titan.</p>
+                    </div>
+                    <a href="#" class="hidden md:inline-block text-sm text-white hover:text-primary transition mt-4 md:mt-0">View Full Documentation -></a>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Card 1: Logistics -->
+                    <div class="glass-panel p-8 rounded-2xl group reveal cursor-pointer h-full">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 text-blue-400 group-hover:text-white group-hover:bg-blue-500 transition-colors">
+                            <i data-lucide="map-pin" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl text-white mb-3">Logistics AI</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            Predictive routing algorithms that adapt to weather, traffic, and geopolitical shifts in real-time.
+                        </p>
+                        <div class="w-full h-32 rounded-lg bg-gradient-to-br from-gray-800 to-black border border-white/5 relative overflow-hidden">
+                             <!-- Abstract UI Graphic -->
+                             <div class="absolute top-4 left-4 w-full h-full border-l border-t border-blue-500/30 rounded-tl-lg"></div>
+                             <div class="absolute bottom-4 right-4 text-xs text-blue-400 font-mono">STATUS: OPTIMIZED</div>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Cartography -->
+                    <div class="glass-panel p-8 rounded-2xl group reveal delay-100 cursor-pointer h-full">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-6 text-primary group-hover:text-black group-hover:bg-primary transition-colors">
+                            <i data-lucide="compass" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl text-white mb-3">Spatial Data</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            High-fidelity 3D mapping for urban planning, architectural visualization, and real estate development.
+                        </p>
+                         <div class="w-full h-32 rounded-lg bg-gradient-to-br from-gray-800 to-black border border-white/5 relative overflow-hidden">
+                             <div class="absolute inset-0 grid grid-cols-6 grid-rows-4 gap-1 opacity-20">
+                                 <div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div>
+                                 <!-- Styling pattern -->
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Bespoke CRM -->
+                    <div class="glass-panel p-8 rounded-2xl group reveal delay-200 cursor-pointer h-full lg:col-span-1 md:col-span-2">
+                        <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-6 text-purple-400 group-hover:text-white group-hover:bg-purple-500 transition-colors">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="text-2xl text-white mb-3">Private CRM</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
+                            A relationship engine built for 8-figure deal cycles. Secure, intuitive, and integrated with our Data Hub.
+                        </p>
+                        <div class="flex items-center justify-between pt-4 border-t border-white/10">
+                            <span class="text-xs text-gray-500 uppercase">Forum Status</span>
+                            <span class="flex items-center text-xs text-green-400"><span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Live</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Data Hubs (Dark Mode) -->
+        <section id="hubs" class="py-32 bg-black relative">
+             <!-- Grid Background -->
+             <div class="absolute inset-0 bg-[linear-gradient(to_right,#222_1px,transparent_1px),linear-gradient(to_bottom,#222_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20"></div>
+
+            <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div class="reveal">
+                        <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">The Nexus.</h2>
+                        <p class="text-xl text-gray-400 mb-8 font-light leading-relaxed">
+                            Data is the new oil, but only if refined. Macropol°s offers two distinct hubs for intelligence gathering and model deployment.
+                        </p>
+                        <div class="flex flex-col space-y-4">
+                            <a href="#" class="flex items-center p-4 glass-panel rounded-xl hover:bg-white/5 group">
+                                <div class="p-3 bg-primary/20 rounded-lg mr-4"><i data-lucide="brain-circuit" class="text-primary"></i></div>
+                                <div>
+                                    <div class="text-white font-bold">Federated AI Marketplace</div>
+                                    <div class="text-gray-500 text-sm">Access pre-trained models securely.</div>
+                                </div>
+                                <i data-lucide="chevron-right" class="ml-auto text-gray-600 group-hover:text-white transition"></i>
+                            </a>
+                            <a href="workspace.html" class="flex items-center p-4 glass-panel rounded-xl hover:bg-white/5 group">
+                                <div class="p-3 bg-blue-500/20 rounded-lg mr-4"><i data-lucide="database-zap" class="text-blue-400"></i></div>
+                                <div>
+                                    <div class="text-white font-bold">The Trustful Data Hub</div>
+                                    <div class="text-gray-500 text-sm">Verified analytics and telemetry.</div>
+                                </div>
+                                <i data-lucide="chevron-right" class="ml-auto text-gray-600 group-hover:text-white transition"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Visual Representation -->
+                    <div class="relative h-[500px] glass-panel rounded-2xl overflow-hidden reveal delay-100 border border-white/10 flex items-center justify-center">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
+                        <!-- Animated Rings -->
+                        <div class="w-64 h-64 border border-blue-500/30 rounded-full absolute animate-[spin_10s_linear_infinite]"></div>
+                        <div class="w-48 h-48 border border-primary/30 rounded-full absolute animate-[spin_15s_linear_infinite_reverse]"></div>
+                        <div class="w-32 h-32 border border-white/10 rounded-full absolute bg-white/5 backdrop-blur-sm"></div>
+                        <div class="text-center z-10">
+                            <div class="text-4xl font-bold text-white font-mono">99.9%</div>
+                            <div class="text-xs text-primary tracking-widest uppercase mt-2">Data Uptime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Industries with Private Link -->
+        <section id="industries" class="py-32 relative">
+            <div class="max-w-7xl mx-auto px-6">
+                <h2 class="text-center text-4xl md:text-5xl font-bold text-white mb-20 reveal">Empowering Industries</h2>
+                
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Industry: Luxury & Textile -->
-                    <div class="bg-dark-bg rounded-2xl overflow-hidden border border-gray-800">
-                        <div class="p-8">
-                            <i data-lucide="gem" class="w-12 h-12 text-primary mb-4"></i>
-                            <h3 class="text-2xl font-bold text-white mb-3">Luxury, Brand & Textile</h3>
-                            <p class="text-subtle-text text-lg mb-6">
-                                Deep brand integration, supply chain transparency, and digital passports for the luxury and textile industries.
-                            </p>
-                            <!-- === LINK TO MOODY.HTML === -->
-                            <a href="moody.html" class="inline-flex items-center text-primary font-semibold hover:text-primary-hover transition-colors">
+                    <!-- Luxury Card (Links to Moody) -->
+                    <div class="glass-panel rounded-3xl overflow-hidden relative group reveal">
+                        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=2574&auto=format&fit=crop" 
+                             class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Fashion">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        
+                        <div class="relative p-10 h-96 flex flex-col justify-end">
+                            <i data-lucide="gem" class="text-primary w-10 h-10 mb-4"></i>
+                            <h3 class="text-3xl text-white font-serif italic mb-2">Luxury & Textile</h3>
+                            <p class="text-gray-300 mb-6">Supply chain transparency meets haute couture brand protection.</p>
+                            
+                            <a href="moody.html" class="inline-flex items-center bg-primary text-black px-6 py-3 rounded-full font-bold hover:bg-white transition w-max">
                                 Enter Private Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
                             </a>
                         </div>
                     </div>
-                    <!-- Industry: Sports & Luxury Trends -->
-                    <div class="bg-dark-bg rounded-2xl overflow-hidden border border-gray-800">
-                        <div class="p-8">
-                            <i data-lucide="trophy" class="w-12 h-12 text-primary mb-4"></i>
-                            <h3 class="text-2xl font-bold text-white mb-3">Global Sports Support</h3>
-                            <p class="text-subtle-text text-lg">
-                                Engaging worldwide players and fans with the best luxury trend deals and next-generation engagement platforms.
-                            </p>
+
+                    <!-- Sports Card -->
+                    <div class="glass-panel rounded-3xl overflow-hidden relative group reveal delay-100">
+                         <img src="https://images.unsplash.com/photo-1519766304807-5f27dd52943a?q=80&w=2574&auto=format&fit=crop" 
+                             class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Sports">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+
+                        <div class="relative p-10 h-96 flex flex-col justify-end">
+                            <i data-lucide="trophy" class="text-secondary w-10 h-10 mb-4"></i>
+                            <h3 class="text-3xl text-white font-serif italic mb-2">Global Sports</h3>
+                            <p class="text-gray-300 mb-6">Next-gen engagement platforms for teams, players, and global fanbases.</p>
+                             <a href="moody.html" class="inline-flex items-center border border-white/20 text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-black transition w-max">
+                                View Case Studies
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- === DIGITAL PAYMENTS === -->
-        <section id="payments" class="py-24 bg-dark-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Digital Payments & Integration</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    Secure, scalable payment solutions for global B2B transactions, from digital wallets to traditional banking.
-                </p>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Payment Options -->
-                    <div class="space-y-6">
-                        <h3 class="text-3xl font-bold text-white mb-4">Flexible Payment Options</h3>
-                        <!-- Stripe -->
-                        <div class="flex items-start p-6 bg-dark-surface rounded-2xl border border-gray-800">
-                            <i data-lucide="credit-card" class="w-10 h-10 text-primary mr-5 flex-shrink-0"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold text-white mb-1">Stripe & Credit Card</h4>
-                                <p class="text-subtle-text">Full support for global credit/debit card processing via Stripe. Simple, secure, and fast.</p>
-                            </div>
-                        </div>
-                        <!-- PayPal -->
-                        <div class="flex items-start p-6 bg-dark-surface rounded-2xl border border-gray-800">
-                            <i data-lucide="external-link" class="w-10 h-10 text-secondary mr-5 flex-shrink-0"></i>
-                            <div>
-                                <h4 class="text-xl font-semibold text-white mb-1">PayPal & Digital Wallets</h4>
-                                <p class="text-subtle-text">Integrate with PayPal, Apple Pay, and Google Pay for seamless checkout experiences.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Integration Solution -->
-                    <div>
-                        <h3 class="text-3xl font-bold text-white mb-4">Simple Integration</h3>
-                        <p class="text-lg text-subtle-text mb-6">Use our universal Payment API to connect your backend in minutes. Secure, documented, and reliable.</p>
-                        
-                        <div class="bg-dark-surface rounded-2xl border border-gray-800 overflow-hidden">
-                            <div class="p-4 bg-gray-900 border-b border-gray-700">
-                                <span class="text-sm text-subtle-text">POST /v1/payment/charge</span>
-                            </div>
-                            <pre class="p-6 text-sm overflow-x-auto"><code class="language-js" style="color: #c9d1d9;">
-<span style="color: #ff7b72;">const</span> macropolis = <span style="color: #79c0ff;">require</span>(<span style="color: #a5d6ff;">'macropolis-sdk'</span>);
-<span style="color: #ff7b72;">const</span> client = <span style="color: #79c0ff;">macropolis</span>({
-  apiKey: <span style="color: #a5d6ff;">process.env.MACRO_API_KEY</span>
-});
-
-<span style="color: #ff7b72;">const</span> charge = <span style="color: #ff7b72;">await</span> client.payments.<span style="color: #d2a8ff;">create</span>({
-  <span style="color: #79c0ff;">amount</span>: <span style="color: #a5d6ff;">2500000</span>, <span style="color: #8b949e;">// $25,000.00 USD</span>
-  <span style="color: #79c0ff;">currency</span>: <span style="color: #a5d6ff;">'usd'</span>,
-  <span style="color: #79c0ff;">source</span>: <span style="color: #a5d6ff;">'src_tok_mastercard'</span>
-});
-                            </code></pre>
-                        </div>
-                    </div>
-                </div>
+        <!-- Section 6: Dynamic Partners Marquee -->
+        <section id="partners" class="py-20 bg-black border-y border-white/5">
+            <div class="text-center mb-12">
+                <p class="text-gray-500 text-sm uppercase tracking-widest">Trusted by Global Leaders</p>
             </div>
-        </section>
-        
-        <!-- Section 5: About -->
-        <section id="about" class="py-24 bg-dark-surface"> 
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white mb-6">We Build for Leaders</h2>
-                <p class="text-xl text-subtle-text mb-8">
-                    Macropol°s was founded on the principle that technology should be a silent, powerful partner to business. Our teams are composed of industry veterans, cloud architects, and AI researchers dedicated to solving the most complex B2B challenges.
-                </p>
-                <div class="flex justify-center gap-8">
-                    <div class="text-center">
-                        <span class="block text-5xl font-bold text-primary">100+</span>
-                        <span class="text-subtle-text">Enterprise Partners</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="block text-5xl font-bold text-primary">$5B+</span>
-                        <span class="text-subtle-text">In Client Transactions</span>
-                    </div>
-                    <div class="text-center">
-                        <span class="block text-5xl font-bold text-primary">24/7</span>
-                        <span class="text-subtle-text">Global Support</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- === ENTERPRISE PARTNERS === -->
-        <section id="partners" class="py-24 bg-dark-bg">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-4">Our Enterprise Partners</h2>
-                <p class="text-center text-xl text-subtle-text mb-16 max-w-2xl mx-auto">
-                    We are proud to collaborate and integrate with the world's leading technology firms.
-                </p>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            
+            <div class="marquee-container w-full">
+                <div class="marquee-content flex items-center gap-16 px-4">
+                    <!-- Repeat logos twice for seamless loop -->
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cloud" class="w-8 h-8"></i> SALESFORCE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="database" class="w-8 h-8"></i> ORACLE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cpu" class="w-8 h-8"></i> NVIDIA</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="search" class="w-8 h-8"></i> GOOGLE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="factory" class="w-8 h-8"></i> SAP</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="shield" class="w-8 h-8"></i> SCOR</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="layout-grid" class="w-8 h-8"></i> MICROSOFT</div>
                     
-                    <!-- Partner: Oracle -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="database" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Oracle</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.oracle.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Oracle Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/oracle" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Oracle LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Salesforce -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="cloud" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Salesforce</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.salesforce.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Salesforce Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/salesforce" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Salesforce LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: SAP -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="factory" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">SAP</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.sap.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="SAP Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/sap" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="SAP LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Databricks -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="database-zap" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Databricks</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.databricks.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Databricks Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/databricks" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Databricks LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Microsoft -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="layout-grid" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Microsoft</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.microsoft.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Microsoft Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/microsoft" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Microsoft LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Berexia -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="code-2" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Berexia</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.berexia.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Berexia Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/berexia" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Berexia LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Scor -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="shield" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">SCOR</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.scor.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="SCOR Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/scor" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="SCOR LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Xia -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="bot" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Xia</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://xia.ai/" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Xia Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/xia-ai" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Xia LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Google -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="search" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Google</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://www.google.com" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Google Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/google" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Google LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
-                    <!-- Partner: Google DeepMind -->
-                    <div class="bg-dark-surface p-6 rounded-2xl border border-gray-800 text-center flex flex-col items-center">
-                        <div class="h-16 w-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-                            <i data-lucide="brain" class="w-8 h-8 text-white"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-white mb-4">Google DeepMind</h3>
-                        <div class="flex justify-center space-x-4">
-                            <a href="https://deepmind.google/" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Google DeepMind Website"><i data-lucide="globe" class="w-6 h-6"></i></a>
-                            <a href="https://www.linkedin.com/company/google-deepmind" target="_blank" rel="noopener" class="text-subtle-text hover:text-primary" aria-label="Google DeepMind LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                        </div>
-                    </div>
-
+                    <!-- Duplicate -->
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cloud" class="w-8 h-8"></i> SALESFORCE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="database" class="w-8 h-8"></i> ORACLE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cpu" class="w-8 h-8"></i> NVIDIA</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="search" class="w-8 h-8"></i> GOOGLE</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="factory" class="w-8 h-8"></i> SAP</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="shield" class="w-8 h-8"></i> SCOR</div>
+                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="layout-grid" class="w-8 h-8"></i> MICROSOFT</div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 6: Contact -->
-        <section id="contact" class="py-24 bg-dark-surface"> 
-            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 class="text-center text-4xl md:text-5xl font-bold tracking-tighter text-white mb-6">Start the Conversation</h2>
-                <p class="text-center text-xl text-subtle-text mb-10">
-                    Let's discuss how our platform can be tailored to your precise needs.
-                </p>
-                <form id="contact-form" class="space-y-6">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-subtle-text mb-2">Full Name</label>
-                            <input type="text" id="name" class="w-full p-4 rounded-lg bg-dark-bg border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="John Doe">
-                        </div>
-                        <div>
-                            <label for="company" class="block text-sm font-medium text-subtle-text mb-2">Company Name</label>
-                            <input type="text" id="company" class="w-full p-4 rounded-lg bg-dark-bg border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Acme Inc.">
-                        </div>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-subtle-text mb-2">Work Email</label>
-                        <input type="email" id="email" class="w-full p-4 rounded-lg bg-dark-bg border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="you@company.com">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-subtle-text mb-2">How can we help?</label>
-                        <textarea id="message" rows="5" class="w-full p-4 rounded-lg bg-dark-bg border border-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="I'm interested in the logistics optimization solution..."></textarea>
-                    </div>
-                    <button type="submit" class="w-full py-4 px-8 bg-primary text-dark-bg text-lg font-semibold rounded-full hover:bg-primary-hover transition duration-300 shadow-lg primary-glow">
-                        Submit Request
-                    </button>
-                </form>
-                <p id="form-message" class="text-center text-lg mt-6"></p>
+        <!-- Footer -->
+        <footer class="bg-dark-bg py-16 border-t border-white/5">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-white">
+                        Macropol<span class="text-primary">°</span>s
+                    </a>
+                    <p class="text-gray-500 text-xs mt-2">© 2025 Macropol°s Inc. All Rights Reserved.</p>
+                </div>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="github" class="w-5 h-5"></i></a>
+                </div>
             </div>
-        </section>
+        </footer>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-dark-bg border-t border-gray-800 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <a href="#home" class="text-3xl font-bold tracking-tighter mb-4 inline-block">
-                Macropol<span class="text-primary">°</span>s
-            </a>
-            <div class="flex justify-center space-x-6 my-6">
-                <a href="#" class="text-subtle-text hover:text-white" aria-label="LinkedIn"><i data-lucide="linkedin" class="w-6 h-6"></i></a>
-                <a href="#" class="text-subtle-text hover:text-white" aria-label="Twitter"><i data-lucide="twitter" class="w-6 h-6"></i></a>
-                <a href="#" class="text-subtle-text hover:text-white" aria-label="GitHub"><i data-lucide="github" class="w-6 h-6"></i></a>
-            </div>
-            <p class="text-subtle-text">
-                &copy; 2025 Macropol°s Inc. All rights reserved.
-            </p>
-        </div>
-    </footer>
-
-    <!-- === CHATBOT === -->
-    <div class="fixed bottom-6 right-6 z-50">
-        <!-- Chat Window -->
-        <div id="chatbot-window" class="hidden w-80 h-96 bg-dark-surface rounded-xl border border-gray-700 shadow-2xl flex flex-col mb-4 transition-all duration-300 transform translate-y-4 opacity-0">
-            <!-- Header -->
-            <div class="flex justify-between items-center p-4 border-b border-gray-700">
-                <h3 class="text-lg font-semibold text-white">Macropol<span class="text-primary">°</span>s Assistant</h3>
-                <button id="close-chatbot" class="text-subtle-text hover:text-white">
-                    <i data-lucide="x" class="w-5 h-5"></i>
-                </button>
-            </div>
-            <!-- Messages -->
-            <div id="chat-messages" class="flex-1 p-4 space-y-4 overflow-y-auto">
-                <div class="p-3 bg-secondary text-white rounded-lg max-w-xs">
-                    Hello! How can I assist you with our enterprise solutions today?
-                </div>
-                <!-- More messages would go here -->
-            </div>
-            <!-- Input -->
-            <div class="p-4 border-t border-gray-700">
-                <div class="flex items-center bg-dark-bg rounded-lg border border-gray-600">
-                    <input type="text" placeholder="Type your message..." class="flex-1 bg-transparent p-3 text-white placeholder-subtle-text focus:outline-none">
-                    <button class="p-3 text-primary hover:text-primary-hover">
-                        <i data-lucide="send" class="w-5 h-5"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Toggle Button -->
-        <button id="chatbot-toggle" class="bg-primary text-dark-bg p-4 rounded-full shadow-lg primary-glow hover:bg-primary-hover transform hover:scale-110 transition-all duration-300">
-            <i data-lucide="message-circle" class="w-8 h-8"></i>
-        </button>
-    </div>
-
     <script>
-        // Init Lucide Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
+        // Mobile Menu
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-
         function toggleMenu() {
-            mobileMenu.classList.toggle('hidden');
-            const icon = menuBtn.querySelector('i');
             if (mobileMenu.classList.contains('hidden')) {
-                icon.setAttribute('data-lucide', 'menu');
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
             } else {
-                icon.setAttribute('data-lucide', 'x');
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
             }
-            lucide.createIcons(); // Redraw icon
         }
-        
         menuBtn.addEventListener('click', toggleMenu);
 
-        // Contact Form Simulation
-        const contactForm = document.getElementById('contact-form');
-        const formMessage = document.getElementById('form-message');
+        // Scroll Animation Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
 
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            // In a real app, you'd send this data to a backend.
-            formMessage.textContent = "Thank you for your inquiry. Our team will contact you shortly.";
-            formMessage.classList.add('text-green-400');
-            contactForm.reset();
-            
-            setTimeout(() => {
-                formMessage.textContent = "";
-                formMessage.classList.remove('text-green-400');
-            }, 5000);
-        });
-
-        // === CHATBOT SCRIPT ===
-        const chatbotToggle = document.getElementById('chatbot-toggle');
-        const chatbotWindow = document.getElementById('chatbot-window');
-        const closeChatbot = document.getElementById('close-chatbot');
-
-        function toggleChatbot() {
-            const isHidden = chatbotWindow.classList.contains('hidden');
-            if (isHidden) {
-                chatbotWindow.classList.remove('hidden');
-                setTimeout(() => {
-                    chatbotWindow.classList.remove('translate-y-4', 'opacity-0');
-                    chatbotToggle.classList.add('opacity-0', 'scale-0');
-                }, 10);
-            } else {
-                chatbotWindow.classList.add('translate-y-4', 'opacity-0');
-                chatbotToggle.classList.remove('opacity-0', 'scale-0');
-                setTimeout(() => {
-                    chatbotWindow.classList.add('hidden');
-                }, 300);
-            }
-        }
-
-        chatbotToggle.addEventListener('click', toggleChatbot);
-        closeChatbot.addEventListener('click', toggleChatbot);
-
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
     </script>
 </body>
 </html>
+
 
