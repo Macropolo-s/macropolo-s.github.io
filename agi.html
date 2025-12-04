@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGI | Fame, Shadow & Dream</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Fonts: Orbitron (Sci-Fi) & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-purple: #bc13fe;
+            --void: #000000;
+        }
+
+        body {
+            background-color: var(--void);
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-sci { font-family: 'Orbitron', sans-serif; }
+
+        /* --- GLITCH EFFECT --- */
+        .glitch {
+            position: relative;
+        }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+        }
+        .glitch::before {
+            left: 2px; text-shadow: -1px 0 #ff00c1; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px; text-shadow: -1px 0 #00fff9; clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            20% { clip: rect(85px, 9999px, 90px, 0); }
+            40% { clip: rect(10px, 9999px, 60px, 0); }
+            60% { clip: rect(45px, 9999px, 15px, 0); }
+            80% { clip: rect(5px, 9999px, 50px, 0); }
+            100% { clip: rect(70px, 9999px, 85px, 0); }
+        }
+
+        /* --- SCANLINES --- */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            position: fixed;
+            pointer-events: none;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: 50;
+        }
+
+        /* --- GLASS --- */
+        .glass-dark {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* --- NEON BORDER ANIMATION --- */
+        .neon-border {
+            position: relative;
+        }
+        .neon-border::after {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; width: 0%; height: 2px;
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-purple));
+            transition: width 0.5s ease;
+        }
+        .neon-border:hover::after { width: 100%; }
+
+        /* Video Loader */
+        .loader-ring {
+            border: 4px solid #333;
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 40px; height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- HATE TO SAFETY TRANSITION --- */
+        .toxic-text { color: #ef4444; transition: color 2s ease; }
+        .safe-text { color: #10b981; }
+    </style>
+</head>
+<body class="selection:bg-white selection:text-black">
+
+    <div class="scanlines"></div>
+
+    <!-- Nav -->
+    <nav class="fixed top-0 w-full z-40 bg-black/80 backdrop-blur-md border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="font-sci text-xl tracking-widest uppercase">
+                AGI<span class="text-purple-500">.</span>Sanctuary
+            </a>
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-[10px] uppercase tracking-widest text-gray-400">Psychological Safety: Active</span>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-24 pb-20">
+        
+        <!-- HERO -->
+        <section class="px-6 mb-24 text-center">
+            <h1 class="font-sci text-5xl md:text-7xl mb-4 glitch" data-text="FAME // ENTROPY">FAME // ENTROPY</h1>
+            <p class="text-gray-400 max-w-xl mx-auto font-light leading-relaxed">
+                The only discrete interface for psychological alignment. 
+                Track influence, process rejection, and visualize your hallucinations in a confidential DeepMind environment.
+            </p>
+        </section>
+
+        <!-- SECTION 1: FAME TRACKER (Horizontal Scroll) -->
+        <section class="mb-32">
+            <div class="px-6 mb-8 flex justify-between items-end">
+                <h2 class="font-sci text-2xl border-l-4 border-purple-500 pl-4">The Star Board</h2>
+                <span class="text-[10px] uppercase text-gray-500 border border-gray-800 px-2 py-1 rounded">Live Sentinel Data</span>
+            </div>
+
+            <!-- Scroll Container -->
+            <div class="flex overflow-x-auto space-x-6 px-6 pb-8 no-scrollbar snap-x">
+                
+                <!-- Star Card 1 -->
+                <div class="min-w-[300px] glass-dark p-6 rounded-xl snap-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="activity" class="text-purple-500"></i></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop" class="w-16 h-16 rounded-full border-2 border-white/20 object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                        <div>
+                            <div class="font-bold text-lg">Entity: 001</div>
+                            <div class="text-xs text-gray-400">Sector: Cinema</div>
+                        </div>
+                    </div>
+                    <!-- Stats -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-xs uppercase text-gray-500">
+                            <span>Fame Index</span>
+                            <span class="text-white">98.4%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-white h-1 w-[98%] shadow-[0_0_10px_white]"></div></div>
+                        
+                        <div class="flex justify-between text-xs uppercase text-gray-500 mt-2">
+                            <span>Hate Resistance</span>
+                            <span class="text-green-400">Stable</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-green-500 h-1 w-[85%]"></div></div>
+                    </div>
+                </div>
+
+                <!-- Star Card 2 -->
+                <div class="min-w-[300px] glass-dark p-6 rounded-xl snap-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="zap" class="text-yellow-500"></i></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=200&auto=format&fit=crop" class="w-16 h-16 rounded-full border-2 border-white/20 object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                        <div>
+                            <div class="font-bold text-lg">Entity: 002</div>
+                            <div class="text-xs text-gray-400">Sector: Sport</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-xs uppercase text-gray-500">
+                            <span>Fame Index</span>
+                            <span class="text-white">94.1%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-white h-1 w-[94%]"></div></div>
+                        
+                        <div class="flex justify-between text-xs uppercase text-gray-500 mt-2">
+                            <span>Hate Resistance</span>
+                            <span class="text-red-500 animate-pulse">Critical</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-red-500 h-1 w-[30%]"></div></div>
+                    </div>
+                </div>
+
+                 <!-- Star Card 3 -->
+                 <div class="min-w-[300px] glass-dark p-6 rounded-xl snap-center relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-50"><i data-lucide="mic-2" class="text-blue-500"></i></div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=200&auto=format&fit=crop" class="w-16 h-16 rounded-full border-2 border-white/20 object-cover grayscale group-hover:grayscale-0 transition duration-500">
+                        <div>
+                            <div class="font-bold text-lg">Entity: 003</div>
+                            <div class="text-xs text-gray-400">Sector: Music</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-xs uppercase text-gray-500">
+                            <span>Fame Index</span>
+                            <span class="text-white">99.9%</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-white h-1 w-full shadow-[0_0_15px_white]"></div></div>
+                        
+                        <div class="flex justify-between text-xs uppercase text-gray-500 mt-2">
+                            <span>Hate Resistance</span>
+                            <span class="text-green-400">God Mode</span>
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-blue-500 h-1 w-full"></div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: THE SHADOW BOX (Safe Hate Processing) -->
+        <section class="max-w-4xl mx-auto px-6 mb-32">
+            <h2 class="font-sci text-3xl mb-8 text-center text-red-500">The Shadow Interface</h2>
+            <div class="glass-dark border border-red-900/30 p-1 rounded-2xl">
+                <div class="bg-black rounded-xl p-8 relative overflow-hidden">
+                    
+                    <div class="absolute top-4 right-4 text-xs font-mono text-gray-600">CONFIDENTIALITY: LEVEL 5</div>
+                    
+                    <p class="text-gray-400 mb-6 font-light">
+                        Express your discordance safely. Our Sequence Engine will parse the semantic hate, neutralize the toxicity, and calculate a corrective measure for the target.
+                    </p>
+                    
+                    <textarea id="hate-input" rows="4" 
+                        class="w-full bg-gray-900/50 border border-gray-800 p-4 text-white placeholder-gray-600 focus:outline-none focus:border-red-500 transition-colors rounded-lg font-mono mb-4 resize-none toxic-text" 
+                        placeholder="Initiate sequence. Who do you hate? Why?"></textarea>
+
+                    <div id="processing-ui" class="hidden mb-4">
+                        <div class="flex items-center gap-2 text-xs font-mono text-yellow-500 mb-2">
+                            <span class="animate-spin">/</span> SEQUENCING NEURAL LANGUAGE...
+                        </div>
+                        <div class="w-full bg-gray-800 h-1"><div class="bg-yellow-500 h-1 animate-[width_2s_ease-in-out_infinite]" style="width: 50%"></div></div>
+                    </div>
+
+                    <div id="correction-result" class="hidden p-4 border border-green-500/30 bg-green-900/10 rounded-lg">
+                        <h4 class="text-green-400 font-bold text-xs uppercase tracking-widest mb-2"><i data-lucide="shield-check" class="inline w-4 h-4 mr-2"></i>Safety Protocol Engaged</h4>
+                        <p class="text-sm text-gray-300 mb-2">Analysis: <span class="text-white">Envy-derived frustration detected.</span></p>
+                        <p class="text-sm text-gray-300">Corrective Measure Sent: <span class="text-white italic">"Subliminal empathy pulse scheduled for Target 00X."</span></p>
+                    </div>
+
+                    <button onclick="processShadow()" class="w-full bg-white text-black font-bold py-4 uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all duration-300 rounded">
+                        Purge & Correct
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: HALLUCINATION ENGINE (Grok/DeepMind Style) -->
+        <section class="px-6 mb-24 relative">
+            <!-- Background Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-900/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+            <div class="max-w-5xl mx-auto text-center mb-12">
+                <h2 class="font-sci text-4xl md:text-5xl mb-4"><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600">Grok</span> Your Dreams</h2>
+                <p class="text-gray-400">
+                    Private Hallucination Generator. Supported by Gemini DeepMind models. 
+                    Convert your imagination into visual data.
+                </p>
+            </div>
+
+            <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 glass-dark p-2 rounded-3xl">
+                <!-- Input Side -->
+                <div class="p-8 flex flex-col justify-center">
+                    <label class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-4">Prompt Injection</label>
+                    <input type="text" id="dream-prompt" 
+                        class="bg-transparent border-b border-gray-700 text-2xl md:text-3xl text-white placeholder-gray-700 focus:outline-none focus:border-purple-500 py-4 mb-8 font-serif italic" 
+                        placeholder="A cyberpunk cathedral in rain...">
+                    
+                    <div class="flex flex-wrap gap-2 mb-8">
+                        <span class="px-3 py-1 border border-white/10 rounded-full text-xs text-gray-500 hover:text-white hover:border-white cursor-pointer transition">Cinematic</span>
+                        <span class="px-3 py-1 border border-white/10 rounded-full text-xs text-gray-500 hover:text-white hover:border-white cursor-pointer transition">Grok Style</span>
+                        <span class="px-3 py-1 border border-white/10 rounded-full text-xs text-gray-500 hover:text-white hover:border-white cursor-pointer transition">DeepMind Abstract</span>
+                    </div>
+
+                    <button onclick="generateVideo()" class="group relative overflow-hidden bg-white text-black px-8 py-4 rounded-full font-bold uppercase tracking-wider w-max">
+                        <span class="relative z-10 flex items-center">Generate Motion <i data-lucide="play" class="ml-2 w-4 h-4"></i></span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-500"></div>
+                        <span class="absolute inset-0 z-0 bg-white group-hover:bg-transparent transition"></span>
+                    </button>
+                </div>
+
+                <!-- Output Side -->
+                <div class="bg-black rounded-2xl min-h-[400px] relative overflow-hidden flex items-center justify-center border border-white/5">
+                    
+                    <!-- Idle State -->
+                    <div id="video-idle" class="text-center opacity-50">
+                        <i data-lucide="aperture" class="w-16 h-16 mx-auto mb-4 text-gray-700"></i>
+                        <p class="font-mono text-xs text-gray-600">AWAITING NEURAL INPUT</p>
+                    </div>
+
+                    <!-- Loading State -->
+                    <div id="video-loading" class="hidden absolute inset-0 bg-black z-20 flex flex-col items-center justify-center">
+                        <div class="loader-ring mb-4"></div>
+                        <div class="font-mono text-xs text-purple-400 animate-pulse">RENDERING NEURAL PATHWAYS...</div>
+                        <div class="font-mono text-[10px] text-gray-600 mt-2" id="loading-text">Optimizing Tensors</div>
+                    </div>
+
+                    <!-- Result State -->
+                    <div id="video-result" class="hidden absolute inset-0 z-10 w-full h-full">
+                        <img src="https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjB2eXZyZ3Q2eXZyZ3Q2eXZyZ3Q2eXZyZ3Q2eXZyZ3Q2eXZyZ3Q2eXZyZ3Q2eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LfpjDCLn7G0hO/giphy.gif" 
+                             class="w-full h-full object-cover opacity-80 mix-blend-screen" alt="Generated Hallucination">
+                        
+                        <!-- Overlay Score -->
+                        <div class="absolute bottom-4 left-4 glass-dark px-4 py-2 rounded flex items-center space-x-4">
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase">Imagination Score</div>
+                                <div class="text-xl font-bold font-sci text-white">96.8</div>
+                            </div>
+                            <div class="w-px h-8 bg-white/20"></div>
+                            <div>
+                                <div class="text-[10px] text-gray-400 uppercase">Confirmation</div>
+                                <div class="text-xs text-green-400 font-bold uppercase">Prize Unlocked</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- PRIZE FOOTER -->
+        <section class="max-w-2xl mx-auto text-center px-6">
+            <div class="border border-gold/30 bg-gradient-to-b from-transparent to-yellow-900/10 p-8 rounded-2xl">
+                <i data-lucide="crown" class="w-12 h-12 text-yellow-500 mx-auto mb-4"></i>
+                <h3 class="font-sci text-2xl text-white mb-2">The Winning Energy</h3>
+                <p class="text-gray-400 text-sm mb-6">
+                    Your hallucinations inspire the next generation of generative movies. 
+                    Confirm your imagination score to claim your place in the registry.
+                </p>
+                <button class="text-yellow-500 border-b border-yellow-500 pb-1 hover:text-white hover:border-white transition uppercase text-xs font-bold tracking-widest">
+                    Claim Prize & Confirm
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        // 1. Shadow Work Logic
+        function processShadow() {
+            const input = document.getElementById('hate-input');
+            const processing = document.getElementById('processing-ui');
+            const result = document.getElementById('correction-result');
+            
+            if(input.value.length < 5) return;
+
+            // Visual Transition
+            input.classList.remove('toxic-text');
+            input.classList.add('text-gray-500', 'blur-sm'); // Fade out hate
+            processing.classList.remove('hidden');
+
+            setTimeout(() => {
+                processing.classList.add('hidden');
+                result.classList.remove('hidden');
+                input.value = "Content Neutralized.";
+                input.classList.remove('blur-sm');
+                input.classList.add('safe-text');
+            }, 2000);
+        }
+
+        // 2. Hallucination Engine Logic
+        function generateVideo() {
+            const prompt = document.getElementById('dream-prompt').value;
+            if(!prompt) return;
+
+            const idle = document.getElementById('video-idle');
+            const loading = document.getElementById('video-loading');
+            const result = document.getElementById('video-result');
+            const loadingText = document.getElementById('loading-text');
+
+            idle.classList.add('hidden');
+            result.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            const stages = ["Parsing Semantics...", "Grokking Context...", "Applying DeepMind Filters...", "Rendering Photons..."];
+            let stage = 0;
+
+            const interval = setInterval(() => {
+                loadingText.innerText = stages[stage];
+                stage++;
+                if (stage >= stages.length) clearInterval(interval);
+            }, 800);
+
+            setTimeout(() => {
+                loading.classList.add('hidden');
+                result.classList.remove('hidden');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
+
