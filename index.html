@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Macropol°s | The Architecture of Tomorrow</title>
+    <title>Macropol°s | Quantum Sovereignty</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <!-- Inter Font -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400;700;900&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* Global Reset & Typography */
         :root {
             --primary: #D4AF37;
+            --agi-accent: #bc13fe; /* The AGI Link Color */
             --bg-dark: #050505;
             --glass-border: rgba(255, 255, 255, 0.08);
         }
@@ -25,103 +25,64 @@
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: #E0E0E0;
-            overflow-x: hidden; /* Critical fix for right-side black space */
+            overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
 
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
-        }
+        .font-sci { font-family: 'Orbitron', sans-serif; }
+        .font-serif { font-family: 'Playfair Display', serif; }
 
-        /* --- Apple-Style Glassmorphism --- */
+        /* --- Quantum Grid Background --- */
+        .quantum-bg {
+            background-color: #000000;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: gridPan 20s linear infinite;
+        }
+        @keyframes gridPan { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
+
+        /* --- Glassmorphism --- */
         .glass-panel {
-            background: rgba(20, 20, 20, 0.6);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--glass-border);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
         .glass-panel:hover {
-            background: rgba(30, 30, 30, 0.7);
-            border-color: rgba(212, 175, 55, 0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+            border-color: rgba(212, 175, 55, 0.4);
+            background: rgba(20, 20, 20, 0.7);
+            box-shadow: 0 0 30px rgba(0,0,0,0.8);
         }
 
-        /* --- Apple-Style Transparent Section --- */
-        .apple-section {
-            background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
+        /* --- AGI Portal Glitch Effect --- */
+        .agi-glitch:hover {
+            animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+            color: var(--agi-accent);
+            border-color: var(--agi-accent);
         }
-        
-        .text-gradient {
-            background: linear-gradient(to right, #fff, #999);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .text-gradient-gold {
-            background: linear-gradient(to right, #D4AF37, #FFE58F, #D4AF37);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% auto;
-            animation: shine 4s linear infinite;
-        }
-
-        @keyframes shine {
-            to { background-position: 200% center; }
-        }
-
-        /* --- Infinite Scroll Marquee --- */
-        .marquee-container {
-            overflow: hidden;
-            white-space: nowrap;
-            position: relative;
-        }
-        
-        .marquee-container::before, .marquee-container::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 100px;
-            height: 100%;
-            z-index: 2;
-        }
-        .marquee-container::before { left: 0; background: linear-gradient(to right, #050505, transparent); }
-        .marquee-container::after { right: 0; background: linear-gradient(to left, #050505, transparent); }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 40s linear infinite;
-        }
-        
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-2deg); }
+            40% { transform: skew(2deg); }
+            60% { transform: skew(-1deg); }
+            80% { transform: skew(1deg); }
+            100% { transform: skew(0deg); }
         }
 
         /* --- Reveal Animation --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Video Hero --- */
+        #hero-video {
+            position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+            object-fit: cover; transform: translate(-50%, -50%); opacity: 0.4;
         }
 
-        /* Video Background Styling */
-        #hero-video {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: translate(-50%, -50%);
-            opacity: 0.5;
-        }
+        /* --- Data Stream Text --- */
+        .font-mono-code { font-family: 'Courier New', monospace; letter-spacing: -0.5px; }
     </style>
 
     <script>
@@ -131,43 +92,54 @@
                     colors: {
                         'dark-bg': '#050505',
                         'primary': '#D4AF37',
-                        'secondary': '#2563EB',
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
+                        'agi': '#bc13fe',
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-dark-bg">
+<body class="bg-dark-bg quantum-bg">
+
+    <!-- Live Telemetry Bar (Bottom Fixed) -->
+    <div class="fixed bottom-0 left-0 w-full h-8 bg-black/90 border-t border-white/10 z-50 flex items-center justify-between px-4 text-[10px] font-mono-code text-gray-500 uppercase tracking-widest hidden md:flex">
+        <div class="flex items-center gap-4">
+            <span class="text-green-500 flex items-center"><span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2 animate-pulse"></span> QUANTUM_CORE: ONLINE</span>
+            <span>THROUGHPUT: <span id="throughput-counter" class="text-white">845</span> TB/s</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <span>LATENCY: 0.004ms</span>
+            <span>ENCRYPTION: POST-QUANTUM</span>
+        </div>
+    </div>
 
     <!-- Header -->
-    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-dark-bg/70 backdrop-blur-xl">
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 border-b border-white/5 bg-dark-bg/80 backdrop-blur-md">
         <nav class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold tracking-tighter text-white">
+            <a href="#home" class="text-2xl font-bold tracking-tighter text-white font-sci">
                 Macropol<span class="text-primary">°</span>s
             </a>
             
             <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#showcase" class="text-sm font-medium text-gray-400 hover:text-white transition">Showcase</a>
-                <a href="#solutions" class="text-sm font-medium text-gray-400 hover:text-white transition">Ecosystem</a>
-                <a href="#hubs" class="text-sm font-medium text-gray-400 hover:text-white transition">Hubs</a>
-                <a href="#partners" class="text-sm font-medium text-gray-400 hover:text-white transition">Partners</a>
-                
-                <div class="h-4 w-px bg-white/10"></div>
+            <div class="hidden lg:flex items-center space-x-6">
+                <!-- SPECIAL AGI LINK -->
+                <a href="agi.html" class="flex items-center gap-2 px-4 py-1.5 rounded border border-purple-500/30 bg-purple-900/10 text-purple-300 text-xs font-bold tracking-widest hover:bg-purple-500 hover:text-white transition-all duration-300 agi-glitch">
+                    <i data-lucide="zap" class="w-3 h-3"></i> AGI.SANCTUARY
+                </a>
 
-                <a href="#login" class="text-sm font-medium text-white">Log in</a>
-                <a href="#contact" class="bg-white text-black px-5 py-2 rounded-full text-sm font-bold hover:bg-gray-200 transition shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                    Contact
+                <div class="h-4 w-px bg-white/10 mx-2"></div>
+
+                <a href="#showcase" class="text-xs font-medium text-gray-400 hover:text-white uppercase tracking-wider transition">Showcase</a>
+                <a href="#hubs" class="text-xs font-medium text-gray-400 hover:text-white uppercase tracking-wider transition">Hubs</a>
+                <a href="moody.html" class="text-xs font-medium text-primary hover:text-white uppercase tracking-wider transition">Private</a>
+                
+                <a href="#contact" class="bg-white text-black px-6 py-2 rounded-sm text-xs font-bold uppercase tracking-widest hover:bg-primary hover:text-black transition">
+                    Connect
                 </a>
             </div>
             
             <!-- Mobile Menu Icon -->
-            <button id="menu-btn" class="md:hidden text-white">
+            <button id="menu-btn" class="lg:hidden text-white">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </nav>
@@ -175,314 +147,222 @@
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="fixed inset-0 bg-black/95 z-50 hidden flex-col items-center justify-center space-y-8 transition-opacity duration-300">
             <button onclick="toggleMenu()" class="absolute top-6 right-6 text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
-            <a href="#showcase" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Showcase</a>
-            <a href="#solutions" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Ecosystem</a>
-            <a href="#hubs" class="text-2xl text-white font-serif italic" onclick="toggleMenu()">Data Hubs</a>
-            <a href="#contact" class="text-primary text-xl tracking-widest uppercase" onclick="toggleMenu()">Contact Sales</a>
+            <a href="agi.html" class="text-3xl text-purple-500 font-sci agi-glitch">AGI / SANCTUARY</a>
+            <a href="moody.html" class="text-2xl text-primary font-serif italic">Private Collection</a>
+            <a href="#showcase" class="text-xl text-white font-light uppercase tracking-widest" onclick="toggleMenu()">Showcase</a>
+            <a href="#hubs" class="text-xl text-white font-light uppercase tracking-widest" onclick="toggleMenu()">Data Hubs</a>
         </div>
     </header>
 
-    <main>
-        <!-- Section 1: Cinematic Hero -->
+    <main class="pb-12">
+        
+        <!-- Section 1: Quantum Hero -->
         <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-black z-0">
-                <!-- 4K Video -->
                 <video id="hero-video" autoplay loop muted playsinline>
                     <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4" type="video/mp4">
                 </video>
-                <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-dark-bg z-10"></div>
+                <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-dark-bg z-10"></div>
+                <!-- Scanline Overlay -->
+                <div class="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_2px,3px_100%] pointer-events-none"></div>
             </div>
 
-            <div class="relative z-20 text-center px-4 max-w-5xl mx-auto mt-16">
-                <div class="inline-block border border-white/20 rounded-full px-4 py-1 mb-6 backdrop-blur-sm bg-white/5 reveal">
-                    <span class="text-primary text-xs font-bold tracking-widest uppercase">The New Standard</span>
+            <div class="relative z-20 text-center px-4 max-w-6xl mx-auto mt-16">
+                <div class="flex justify-center mb-6 reveal">
+                    <div class="flex items-center gap-3 px-4 py-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-full">
+                        <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                        <span class="text-[10px] text-gray-300 font-mono-code uppercase">System: Quantum-Ready</span>
+                    </div>
                 </div>
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white mb-6 leading-[1.1] reveal delay-100">
-                    The Architecture <br> of <span class="text-gradient-gold italic serif font-normal">Sovereignty</span>.
+
+                <h1 class="text-5xl md:text-8xl font-bold tracking-tighter text-white mb-6 leading-tight font-sci reveal delay-100">
+                    QUANTUM <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-primary">SOVEREIGNTY</span>
                 </h1>
-                <p class="max-w-2xl mx-auto text-lg md:text-xl text-gray-300 mb-10 font-light leading-relaxed reveal delay-200">
-                    Macropol°s is the operating system for the ultra-enterprise. 
-                    From federated AI to bespoke logistics, we engineer the invisible infrastructure of power.
+                
+                <p class="max-w-2xl mx-auto text-lg text-gray-400 mb-10 font-light leading-relaxed reveal delay-200">
+                    The operating system for the ultra-enterprise. 
+                    Processing <span class="text-white font-mono-code">4.2 PB</span> of logistic and behavioral data per second.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center items-center gap-4 reveal delay-300">
-                    <a href="#showcase" class="w-full sm:w-auto bg-white text-black px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition duration-300">
-                        Explore the Vision
+                
+                <div class="flex flex-col sm:flex-row justify-center items-center gap-6 reveal delay-300">
+                    <a href="#quantum-agi" class="group relative px-8 py-4 bg-white text-black font-bold text-sm uppercase tracking-widest overflow-hidden">
+                        <span class="relative z-10">Initialize Core</span>
+                        <div class="absolute inset-0 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
                     </a>
-                    <a href="#contact" class="w-full sm:w-auto glass-panel text-white px-8 py-4 rounded-full font-medium text-lg hover:bg-white/10">
-                        Request Access
+                    <a href="moody.html" class="text-sm text-gray-400 uppercase tracking-widest hover:text-primary transition flex items-center gap-2">
+                        Private Access <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Section 2: The Visionary Showcase (Reinvented Aura Section) -->
-        <section id="showcase" class="relative py-32 apple-section overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+        <!-- SECTION 2: THE DOMINANT AGI PORTAL (The Attractive Link) -->
+        <section id="quantum-agi" class="relative py-32 overflow-hidden bg-black">
+            <!-- Portal Effect Background -->
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black animate-pulse"></div>
             
-            <!-- Background Glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] pointer-events-none"></div>
-
             <div class="max-w-7xl mx-auto px-6 relative z-10">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                    
+                    <!-- Text Side -->
+                    <div class="reveal">
+                        <div class="text-purple-500 font-mono-code text-xs mb-4 flex items-center gap-2">
+                            <i data-lucide="cpu" class="w-4 h-4"></i>
+                            NEURAL INTERFACE DETECTED
+                        </div>
+                        <h2 class="text-5xl md:text-7xl font-sci text-white mb-6">
+                            AGI <span class="text-purple-500">SANCTUARY</span>
+                        </h2>
+                        <p class="text-xl text-gray-400 mb-8 font-light border-l-2 border-purple-500/50 pl-6">
+                            The only discrete interface for psychological alignment. 
+                            Track fame entropy, process rejection, and visualize your hallucinations in a confidential DeepMind environment.
+                        </p>
+                        
+                        <!-- The Big Button -->
+                        <a href="agi.html" class="inline-flex items-center gap-4 px-8 py-6 bg-purple-900/20 border border-purple-500 text-white font-sci tracking-widest hover:bg-purple-500 hover:text-black hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(188,19,254,0.3)]">
+                            <i data-lucide="fingerprint" class="w-6 h-6"></i>
+                            ENTER THE MATRIX
+                        </a>
+                    </div>
+
+                    <!-- Visual Side (Data Visualization) -->
+                    <div class="relative h-[500px] glass-panel rounded-none border-l border-t border-purple-500/30 reveal delay-100 flex items-center justify-center overflow-hidden">
+                        <!-- Abstract Quantum Visual -->
+                        <div class="absolute inset-0 bg-black opacity-50"></div>
+                        <div class="w-[120%] h-[120%] border border-purple-500/20 rounded-full absolute animate-[spin_20s_linear_infinite]"></div>
+                        <div class="w-[80%] h-[80%] border border-blue-500/20 rounded-full absolute animate-[spin_15s_linear_infinite_reverse]"></div>
+                        <div class="w-64 h-64 bg-purple-600/10 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/10 z-10">
+                            <div class="text-center">
+                                <div class="text-4xl font-sci text-white">99.9%</div>
+                                <div class="text-[10px] text-purple-400 font-mono-code mt-2">PSYCH-SAFETY SCORE</div>
+                            </div>
+                        </div>
+                        <!-- Floating Data Points -->
+                        <div class="absolute top-10 right-10 font-mono-code text-[10px] text-gray-500">Hallucinations: Active</div>
+                        <div class="absolute bottom-10 left-10 font-mono-code text-[10px] text-gray-500">Entropy: Nullified</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Visionary Showcase (Apple Style but Quantum) -->
+        <section id="showcase" class="py-32 relative">
+            <div class="max-w-7xl mx-auto px-6">
                 <div class="text-center mb-20 reveal">
-                    <h2 class="text-4xl md:text-6xl font-bold text-gradient mb-6">Aura. Redefined.</h2>
-                    <p class="text-xl text-gray-400 max-w-2xl mx-auto font-light">
-                        Experience the intersection of digital scarcity and physical mastery. 
-                        Our "Aura" line integrates blockchain provenance directly into the atomic structure of luxury.
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-6 font-serif italic">Atomic Luxury</h2>
+                    <p class="text-gray-400 font-mono-code text-xs uppercase tracking-widest">
+                        Digital Twins • Blockchain Provenance • Zero Latency
                     </p>
                 </div>
 
-                <!-- Featured Product: Large Apple Style Layout -->
-                <div class="relative w-full aspect-[4/3] md:aspect-[21/9] rounded-3xl overflow-hidden border border-white/10 group reveal delay-100">
-                    <!-- High-End Background Image -->
+                <div class="relative w-full aspect-[16/9] rounded-sm overflow-hidden border border-white/10 group reveal">
                     <img src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?q=80&w=2574&auto=format&fit=crop" 
-                         class="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-105" 
-                         alt="Luxury Watch Movement">
+                         class="absolute inset-0 w-full h-full object-cover opacity-60 transition-transform duration-[3s] group-hover:scale-105 saturate-0 group-hover:saturate-100" 
+                         alt="Luxury Watch">
                     
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black"></div>
 
-                    <!-- Floating Content -->
-                    <div class="absolute bottom-0 left-0 w-full p-8 md:p-16 flex flex-col md:flex-row justify-between items-end">
-                        <div class="max-w-lg mb-8 md:mb-0">
-                            <div class="text-primary text-sm tracking-[0.3em] uppercase mb-2 font-bold">The Chronograph</div>
-                            <h3 class="text-4xl md:text-5xl text-white mb-4 font-serif italic">Aura 18k</h3>
-                            <p class="text-gray-300 mb-6 text-lg">
-                                Swiss mechanics meeting Silicon Valley cryptography. 
-                                Each movement is paired with a non-fungible digital twin, ensuring eternal provenance.
+                    <div class="absolute bottom-0 left-0 p-8 md:p-16 w-full flex flex-col md:flex-row justify-between items-end">
+                        <div class="max-w-md">
+                            <h3 class="text-4xl text-white font-serif italic mb-4">Aura 18k</h3>
+                            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                                The first chronograph synchronized with quantum time servers. 
+                                Each tick is verified on the blockchain.
                             </p>
-                            <a href="moody.html" class="inline-flex items-center text-white border-b border-primary pb-1 hover:text-primary transition">
-                                Enter Private Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
+                            <a href="moody.html" class="text-primary border-b border-primary pb-1 text-xs uppercase tracking-widest hover:text-white transition">
+                                Access Private Collection
                             </a>
                         </div>
-                        
-                        <!-- Glass Spec Card -->
-                        <div class="glass-panel p-6 rounded-2xl w-full md:w-auto flex gap-8">
-                            <div class="text-center">
-                                <div class="text-2xl text-white font-bold">18k</div>
-                                <div class="text-xs text-gray-500 uppercase tracking-wider">Gold</div>
-                            </div>
-                            <div class="w-px bg-white/10"></div>
-                            <div class="text-center">
-                                <div class="text-2xl text-white font-bold">NFT</div>
-                                <div class="text-xs text-gray-500 uppercase tracking-wider">Verified</div>
-                            </div>
-                            <div class="w-px bg-white/10"></div>
-                            <div class="text-center">
-                                <div class="text-2xl text-white font-bold">0.0s</div>
-                                <div class="text-xs text-gray-500 uppercase tracking-wider">Latency</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 3: Interactive Solutions Grid -->
-        <section id="solutions" class="py-32 relative">
-            <div class="max-w-7xl mx-auto px-6">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
-                    <div>
-                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">The Ecosystem</h2>
-                        <p class="text-gray-400 max-w-md">An integrated suite of enterprise-grade modules designed for the modern titan.</p>
-                    </div>
-                    <a href="#" class="hidden md:inline-block text-sm text-white hover:text-primary transition mt-4 md:mt-0">View Full Documentation -></a>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Card 1: Logistics -->
-                    <div class="glass-panel p-8 rounded-2xl group reveal cursor-pointer h-full">
-                        <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center mb-6 text-blue-400 group-hover:text-white group-hover:bg-blue-500 transition-colors">
-                            <i data-lucide="map-pin" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-2xl text-white mb-3">Logistics AI</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            Predictive routing algorithms that adapt to weather, traffic, and geopolitical shifts in real-time.
-                        </p>
-                        <div class="w-full h-32 rounded-lg bg-gradient-to-br from-gray-800 to-black border border-white/5 relative overflow-hidden">
-                             <!-- Abstract UI Graphic -->
-                             <div class="absolute top-4 left-4 w-full h-full border-l border-t border-blue-500/30 rounded-tl-lg"></div>
-                             <div class="absolute bottom-4 right-4 text-xs text-blue-400 font-mono">STATUS: OPTIMIZED</div>
-                        </div>
-                    </div>
-
-                    <!-- Card 2: Cartography -->
-                    <div class="glass-panel p-8 rounded-2xl group reveal delay-100 cursor-pointer h-full">
-                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-6 text-primary group-hover:text-black group-hover:bg-primary transition-colors">
-                            <i data-lucide="compass" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-2xl text-white mb-3">Spatial Data</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            High-fidelity 3D mapping for urban planning, architectural visualization, and real estate development.
-                        </p>
-                         <div class="w-full h-32 rounded-lg bg-gradient-to-br from-gray-800 to-black border border-white/5 relative overflow-hidden">
-                             <div class="absolute inset-0 grid grid-cols-6 grid-rows-4 gap-1 opacity-20">
-                                 <div class="bg-white"></div><div class="bg-transparent"></div><div class="bg-white"></div>
-                                 <!-- Styling pattern -->
-                             </div>
-                        </div>
-                    </div>
-
-                    <!-- Card 3: Bespoke CRM -->
-                    <div class="glass-panel p-8 rounded-2xl group reveal delay-200 cursor-pointer h-full lg:col-span-1 md:col-span-2">
-                        <div class="w-12 h-12 bg-purple-500/20 rounded-full flex items-center justify-center mb-6 text-purple-400 group-hover:text-white group-hover:bg-purple-500 transition-colors">
-                            <i data-lucide="users" class="w-6 h-6"></i>
-                        </div>
-                        <h3 class="text-2xl text-white mb-3">Private CRM</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed mb-6">
-                            A relationship engine built for 8-figure deal cycles. Secure, intuitive, and integrated with our Data Hub.
-                        </p>
-                        <div class="flex items-center justify-between pt-4 border-t border-white/10">
-                            <span class="text-xs text-gray-500 uppercase">Forum Status</span>
-                            <span class="flex items-center text-xs text-green-400"><span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span> Live</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section 4: Data Hubs (Dark Mode) -->
-        <section id="hubs" class="py-32 bg-black relative">
-             <!-- Grid Background -->
-             <div class="absolute inset-0 bg-[linear-gradient(to_right,#222_1px,transparent_1px),linear-gradient(to_bottom,#222_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-20"></div>
-
-            <div class="max-w-7xl mx-auto px-6 relative z-10">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                    <div class="reveal">
-                        <h2 class="text-5xl md:text-6xl font-bold text-white mb-6">The Nexus.</h2>
-                        <p class="text-xl text-gray-400 mb-8 font-light leading-relaxed">
-                            Data is the new oil, but only if refined. Macropol°s offers two distinct hubs for intelligence gathering and model deployment.
-                        </p>
-                        <div class="flex flex-col space-y-4">
-                            <!-- === MODIFIED LINK TO AIMARKET.HTML === -->
-                            <a href="agenticaimarket.html" class="flex items-center p-4 glass-panel rounded-xl hover:bg-white/5 group">
-                                <div class="p-3 bg-primary/20 rounded-lg mr-4"><i data-lucide="brain-circuit" class="text-primary"></i></div>
+                        <!-- Live Data Box -->
+                        <div class="glass-panel p-4 mt-8 md:mt-0">
+                            <div class="grid grid-cols-2 gap-8 text-center">
                                 <div>
-                                    <div class="text-white font-bold">Federated AI Marketplace</div>
-                                    <div class="text-gray-500 text-sm">Access pre-trained models securely.</div>
+                                    <div class="text-2xl text-white font-mono-code">18k</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Material</div>
                                 </div>
-                                <i data-lucide="chevron-right" class="ml-auto text-gray-600 group-hover:text-white transition"></i>
-                            </a>
-                            <!-- === END MODIFIED LINK === -->
-                            
-                            <a href="workspace.html" class="flex items-center p-4 glass-panel rounded-xl hover:bg-white/5 group">
-                                <div class="p-3 bg-blue-500/20 rounded-lg mr-4"><i data-lucide="database-zap" class="text-blue-400"></i></div>
                                 <div>
-                                    <div class="text-white font-bold">The Trustful Data Hub</div>
-                                    <div class="text-gray-500 text-sm">Verified analytics and telemetry.</div>
+                                    <div class="text-2xl text-primary font-mono-code animate-pulse">LIVE</div>
+                                    <div class="text-[10px] text-gray-500 uppercase">Status</div>
                                 </div>
-                                <i data-lucide="chevron-right" class="ml-auto text-gray-600 group-hover:text-white transition"></i>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <!-- Visual Representation -->
-                    <div class="relative h-[500px] glass-panel rounded-2xl overflow-hidden reveal delay-100 border border-white/10 flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-purple-900/20"></div>
-                        <!-- Animated Rings -->
-                        <div class="w-64 h-64 border border-blue-500/30 rounded-full absolute animate-[spin_10s_linear_infinite]"></div>
-                        <div class="w-48 h-48 border border-primary/30 rounded-full absolute animate-[spin_15s_linear_infinite_reverse]"></div>
-                        <div class="w-32 h-32 border border-white/10 rounded-full absolute bg-white/5 backdrop-blur-sm"></div>
-                        <div class="text-center z-10">
-                            <div class="text-4xl font-bold text-white font-mono">99.9%</div>
-                            <div class="text-xs text-primary tracking-widest uppercase mt-2">Data Uptime</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Section 5: Industries with Private Link -->
-        <section id="industries" class="py-32 relative">
+        <!-- Section 4: The Nexus (Hubs) -->
+        <section id="hubs" class="py-32 bg-black relative border-t border-white/5">
             <div class="max-w-7xl mx-auto px-6">
-                <h2 class="text-center text-4xl md:text-5xl font-bold text-white mb-20 reveal">Empowering Industries</h2>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Luxury Card (Links to Moody) -->
-                    <div class="glass-panel rounded-3xl overflow-hidden relative group reveal">
-                        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?q=80&w=2574&auto=format&fit=crop" 
-                             class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Fashion">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                        
-                        <div class="relative p-10 h-96 flex flex-col justify-end">
-                            <i data-lucide="gem" class="text-primary w-10 h-10 mb-4"></i>
-                            <h3 class="text-3xl text-white font-serif italic mb-2">Luxury & Textile</h3>
-                            <p class="text-gray-300 mb-6">Supply chain transparency meets haute couture brand protection.</p>
-                            
-                            <a href="moody.html" class="inline-flex items-center bg-primary text-black px-6 py-3 rounded-full font-bold hover:bg-white transition w-max">
-                                Enter Private Collection <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                            </a>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+                    <!-- AI Market -->
+                    <a href="aimarket.html" class="group glass-panel p-10 h-80 flex flex-col justify-between hover:bg-white/5 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="brain-circuit" class="w-12 h-12 text-primary"></i>
                         </div>
-                    </div>
-
-                    <!-- Sports Card -->
-                    <div class="glass-panel rounded-3xl overflow-hidden relative group reveal delay-100">
-                         <img src="https://images.unsplash.com/photo-1519766304807-5f27dd52943a?q=80&w=2574&auto=format&fit=crop" 
-                             class="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700" alt="Sports">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-
-                        <div class="relative p-10 h-96 flex flex-col justify-end">
-                            <i data-lucide="trophy" class="text-secondary w-10 h-10 mb-4"></i>
-                            <h3 class="text-3xl text-white font-serif italic mb-2">Global Sports</h3>
-                            <p class="text-gray-300 mb-6">Next-gen engagement platforms for teams, players, and global fanbases.</p>
-                             <a href="moody.html" class="inline-flex items-center border border-white/20 text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-black transition w-max">
-                                View Case Studies
-                            </a>
+                        <div>
+                            <h3 class="text-2xl text-white font-bold mb-2">Federated AI</h3>
+                            <p class="text-gray-500 text-sm">Deploy autonomous agents. Predict trends.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+                        <div class="w-full h-1 bg-gray-800 mt-4 overflow-hidden">
+                            <div class="h-full bg-primary w-1/3 animate-[loading_2s_ease-in-out_infinite]"></div>
+                        </div>
+                    </a>
 
-        <!-- Section 6: Dynamic Partners Marquee -->
-        <section id="partners" class="py-20 bg-black border-y border-white/5">
-            <div class="text-center mb-12">
-                <p class="text-gray-500 text-sm uppercase tracking-widest">Trusted by Global Leaders</p>
-            </div>
-            
-            <div class="marquee-container w-full">
-                <div class="marquee-content flex items-center gap-16 px-4">
-                    <!-- Repeat logos twice for seamless loop -->
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cloud" class="w-8 h-8"></i> SALESFORCE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="database" class="w-8 h-8"></i> ORACLE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cpu" class="w-8 h-8"></i> NVIDIA</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="search" class="w-8 h-8"></i> GOOGLE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="factory" class="w-8 h-8"></i> SAP</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="shield" class="w-8 h-8"></i> SCOR</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="layout-grid" class="w-8 h-8"></i> MICROSOFT</div>
-                    
-                    <!-- Duplicate -->
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cloud" class="w-8 h-8"></i> SALESFORCE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="database" class="w-8 h-8"></i> ORACLE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="cpu" class="w-8 h-8"></i> NVIDIA</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="search" class="w-8 h-8"></i> GOOGLE</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="factory" class="w-8 h-8"></i> SAP</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="shield" class="w-8 h-8"></i> SCOR</div>
-                    <div class="flex items-center gap-4 text-2xl font-bold text-gray-600"><i data-lucide="layout-grid" class="w-8 h-8"></i> MICROSOFT</div>
+                    <!-- Data Workspace -->
+                    <a href="workspace.html" class="group glass-panel p-10 h-80 flex flex-col justify-between hover:bg-white/5 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="database" class="w-12 h-12 text-blue-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl text-white font-bold mb-2">Data Workspace</h3>
+                            <p class="text-gray-500 text-sm">SQL Editor. Jupyter. Grafana.</p>
+                        </div>
+                        <div class="font-mono-code text-xs text-blue-500 mt-4">
+                            > CONNECTING_DB...
+                        </div>
+                    </a>
+
+                    <!-- Private Client -->
+                    <a href="moody.html" class="group glass-panel p-10 h-80 flex flex-col justify-between hover:bg-white/5 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-6 opacity-20 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="gem" class="w-12 h-12 text-purple-500"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl text-white font-bold mb-2">Private Client</h3>
+                            <p class="text-gray-500 text-sm">Litigation Finance. Reputation Defense.</p>
+                        </div>
+                        <div class="flex items-center gap-2 mt-4">
+                            <span class="w-2 h-2 bg-purple-500 rounded-full animate-ping"></span>
+                            <span class="text-[10px] text-purple-400 uppercase">Invite Only</span>
+                        </div>
+                    </a>
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer class="bg-dark-bg py-16 border-t border-white/5">
-            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <a href="#" class="text-2xl font-bold tracking-tighter text-white">
-                        Macropol<span class="text-primary">°</span>s
-                    </a>
-                    <p class="text-gray-500 text-xs mt-2">© 2025 Macropol°s Inc. All Rights Reserved.</p>
+        <footer class="bg-black py-20 border-t border-white/5 mb-8">
+            <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="text-center md:text-left">
+                    <div class="text-2xl font-bold font-sci text-white">Macropol°s</div>
+                    <div class="text-[10px] text-gray-600 font-mono-code mt-2">QUANTUM ENCRYPTION: ENABLED</div>
                 </div>
-                <div class="flex gap-6">
-                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="twitter" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="linkedin" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-gray-500 hover:text-white transition"><i data-lucide="github" class="w-5 h-5"></i></a>
+                <div class="flex gap-8 text-gray-500">
+                    <a href="#" class="hover:text-primary transition"><i data-lucide="cpu" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-primary transition"><i data-lucide="globe" class="w-5 h-5"></i></a>
+                    <a href="#" class="hover:text-primary transition"><i data-lucide="shield" class="w-5 h-5"></i></a>
                 </div>
             </div>
         </footer>
+
     </main>
 
     <script>
         lucide.createIcons();
 
-        // Mobile Menu
+        // Mobile Menu Toggle
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         function toggleMenu() {
@@ -496,7 +376,7 @@
         }
         menuBtn.addEventListener('click', toggleMenu);
 
-        // Scroll Animation Observer
+        // Scroll Observer
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -504,8 +384,15 @@
                 }
             });
         }, { threshold: 0.1 });
-
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Throughput Counter Simulation
+        const throughputEl = document.getElementById('throughput-counter');
+        let count = 845;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 50);
+            throughputEl.innerText = count.toLocaleString();
+        }, 100);
     </script>
 </body>
 </html>
