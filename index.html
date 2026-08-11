@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HuntersJump — The Agentic Founder Platform</title>
-    <meta name="description" content="Where Graph Knowledge Hits LLM Vectors. Powered by Omnigent and AirLLM for autonomous founder-led execution.">
+    <title>HuntersJump — The Official Ballistic Seed</title>
+    <meta name="description" content="The bridge between serious engineering and the next developer/compute market.">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,236 +13,203 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            50: '#f0f3ff',
-                            400: '#818cf8',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            900: '#1e1b4b',
-                            950: '#0f0e26'
-                        }
+                        brand: { 500: '#6366f1', 900: '#1e1b4b', 950: '#0f0e26' }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
         }
     </script>
-    <!-- Inter Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Inter & JetBrains VS Mono Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
         code, pre { font-family: 'JetBrains Mono', monospace; }
-        .glow-bg {
-            background: radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.08) 35%, rgba(15, 14, 38, 0) 70%);
+        .glass-panel {
+            background: rgba(15, 14, 38, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col justify-between">
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white min-h-screen flex flex-col">
 
     <!-- Header Navigation -->
     <header class="fixed top-0 w-full z-50 border-b border-slate-800/80 bg-slate-950/80 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
             <a href="#" class="flex items-center gap-3 group">
-                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-indigo-500 to-emerald-500 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
                     HJ
                 </div>
                 <span class="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
-                    HuntersJump
+                    GoatJump
                 </span>
             </a>
             
             <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-                <a href="#architecture" class="hover:text-white transition-colors">Architecture</a>
-                <a href="#graph-vector" class="hover:text-white transition-colors">Graph + Vectors</a>
-                <a href="#airllm" class="hover:text-white transition-colors">AirLLM Engine</a>
-                <a href="#manifesto" class="hover:text-white transition-colors">Founder Path</a>
+                <a href="#manifesto" class="hover:text-white transition-colors">The Manifesto</a>
+                <a href="#infrastructure" class="hover:text-white transition-colors">Missing Infrastructure</a>
+                <a href="#market" class="hover:text-white transition-colors">Market Players</a>
             </nav>
 
             <div class="flex items-center gap-4">
-                <a href="https://github.com/Reimain/HuntersJump" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:border-slate-600">
-                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                    </svg>
-                    <span>Star on GitHub</span>
+                <a href="https://github.com/Reimain/HuntersJump" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm font-semibold transition-all hover:border-slate-500">
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    <span>Inspect Code</span>
                 </a>
             </div>
         </div>
     </header>
 
-    <main class="pt-24 glow-bg">
-        <!-- Hero Section -->
-        <section class="max-w-5xl mx-auto px-6 py-20 text-center">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-semibold uppercase tracking-wider mb-8">
-                <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
-                The Agentic Founder Infrastructure
+    <main class="flex-grow pt-16">
+        <!-- Hero Section with Turtle/Rabbit Background -->
+        <section id="manifesto" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+            <!-- Metaphorical Background -->
+            <div class="absolute inset-0 z-0">
+                <!-- Ensure turtle-race.png is uploaded to the root of your repo -->
+                <img src="turtle-race.png" class="w-full h-full object-cover opacity-30 mix-blend-luminosity scale-105 animate-pulse-slow" alt="Turtle crossing the finish line while rabbit runs" />
+                <div class="absolute inset-0 bg-gradient-to-b from-slate-950/60 via-slate-950/80 to-slate-950"></div>
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0)_0%,rgba(15,14,38,1)_100%)]"></div>
             </div>
 
-            <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-8 leading-[1.1]">
-                Where Graph Knowledge<br>
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
-                    Hits LLM Vectors
-                </span>
-            </h1>
-
-            <p class="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
-                HuntersJump brings together sovereign local intelligence and structural memory. Run 70B parameter agentic workflows on standard hardware via <strong class="text-slate-200">AirLLM</strong>, governed by <strong class="text-slate-200">Omnigent</strong> orchestrations and unified graph-vector RAG.
-            </p>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="https://github.com/Reimain/HuntersJump" target="_blank" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02]">
-                    Explore Repository &rarr;
-                </a>
-                <a href="#architecture" class="w-full sm:w-auto px-8 py-4 rounded-xl border border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-slate-300 font-semibold text-base transition-all">
-                    View Technical Architecture
-                </a>
-            </div>
-
-            <!-- Code Preview Box -->
-            <div class="mt-16 text-left border border-slate-800 rounded-2xl bg-slate-900/80 shadow-2xl overflow-hidden backdrop-blur-xl max-w-3xl mx-auto">
-                <div class="bg-slate-950/80 px-4 py-3 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
-                    <div class="flex items-center gap-2">
-                        <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-                        <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-                        <span class="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-                        <span class="ml-2 text-slate-500">hunters_jump_agent.py</span>
-                    </div>
-                    <span>Omnigent + AirLLM Core</span>
+            <div class="relative z-10 max-w-5xl mx-auto px-6 py-20 text-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-8">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    The Official Ballistic God Seed
                 </div>
-                <pre class="p-6 text-sm text-slate-300 overflow-x-auto"><code><span class="text-purple-400">from</span> huntersjump <span class="text-purple-400">import</span> OmnigentRuntime, GraphVectorStore
-<span class="text-purple-400">from</span> airllm <span class="text-purple-400">import</span> AirLLMLlama3
 
-<span class="text-slate-500"># Initialize 70B inference on localized layer-wise architecture</span>
-model = AirLLMLlama3(model_key=<span class="text-emerald-400">"meta-llama/Meta-Llama-3-70B-Instruct"</span>)
+                <h1 class="text-4xl md:text-7xl font-extrabold tracking-tight text-white mb-8 leading-[1.1]">
+                    The word "agentic" <br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-500 to-slate-300 line-through decoration-red-500/50 decoration-4">Goat diluted.</span>
+                </h1>
 
-<span class="text-slate-500"># Connect Graph Knowledge hit-mapping with Vector Embeddings</span>
-knowledge_mesh = GraphVectorStore.connect(
-    graph_db=<span class="text-emerald-400">"neo4j://localhost:7687"</span>,
-    vector_dim=<span class="text-emerald-400">1536</span>
-)
+                <p class="text-xl md:text-2xl text-slate-300 max-w-4xl mx-auto mb-8 font-light leading-relaxed">
+                    Most of what carries the label now is thin wrappers and marketing decks. Only a minority stayed in the real work from the first seed runs.
+                </p>
 
-<span class="text-slate-500"># Deploy Autonomous Founder Agent</span>
-agent = OmnigentRuntime(llm=model, memory=knowledge_mesh)
-agent.execute(goal=<span class="text-emerald-400">"Autonomous Market & Code Architecture Reasoning"</span>)</code></pre>
+                <p class="text-lg text-emerald-400/90 max-w-3xl mx-auto mb-12 font-medium">
+                    This is the bridge between serious engineering and the next developer/compute market. Beyond social-media seed running.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                    <a href="#infrastructure" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-slate-950 font-bold text-base shadow-[0_0_40px_-10px_rgba(255,255,255,0.3)] transition-all hover:scale-[1.02]">
+                        View The Real Crawling Infrastructure seed &rarr;
+                    </a>
+                </div>
             </div>
         </section>
 
-        <!-- Core Architectural Pillars -->
-        <section id="architecture" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
-            <div class="text-center mb-16">
-                <h2 class="text-xs uppercase tracking-widest text-indigo-400 font-bold mb-3">Foundational Technology</h2>
-                <p class="text-3xl md:text-5xl font-bold text-white tracking-tight">The Three Engine Pillars</p>
+        <!-- The Missing Infrastructure -->
+        <section id="infrastructure" class="max-w-7xl mx-auto px-6 py-24 border-t border-slate-800/60 relative">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent"></div>
+            
+            <div class="text-center mb-20">
+                <h2 class="text-sm uppercase tracking-widest text-emerald-500 font-bold mb-4">We are building</h2>
+                <p class="text-4xl md:text-5xl font-bold text-white tracking-tight">The Missing Infrastructure</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Pillar 1 -->
-                <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-indigo-500/50 transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Core 1 -->
+                <div class="glass-panel p-10 rounded-3xl hover:border-emerald-500/50 transition-all hover:-translate-y-2 group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Omnigent Agentic Loop</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        An orchestration framework built for true autonomous execution. Multi-agent goal decomposition, self-correcting execution pipelines, and deterministic state management.
+                    <h3 class="text-2xl font-bold text-white mb-4">Open Ledger + Skills Package Manager</h3>
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        Agent capabilities shouldn't be black boxes. We provide the protocol where specialized agent skills can be systematically versioned, openly traded, and cryptographically audited by the community.
                     </p>
                 </div>
 
-                <!-- Pillar 2 -->
-                <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-purple-500/50 transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <!-- Core 2 -->
+                <div class="glass-panel p-10 rounded-3xl hover:border-indigo-500/50 transition-all hover:-translate-y-2 group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">AirLLM Engine</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Inference without boundaries. AirLLM allows running massive 70B+ parameter models on consumer GPUs using layer-wise memory swapping—democratizing frontier capability.
+                    <h3 class="text-2xl font-bold text-white mb-4">Agentic Arena</h3>
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        A Kaggle-style arena dedicated entirely to agent engineering and compute alignment. Test architectures (Omnigent, AirLLM) against real, high-stakes synthetic environments to prove empirical dominance.
                     </p>
                 </div>
 
-                <!-- Pillar 3 -->
-                <div class="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-pink-500/50 transition-all hover:-translate-y-1">
-                    <div class="w-12 h-12 rounded-xl bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                <!-- Core 3 -->
+                <div class="glass-panel p-10 rounded-3xl hover:border-amber-500/50 transition-all hover:-translate-y-2 group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 mb-8 group-hover:scale-110 transition-transform">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Graph + Vector Synthesis</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Where dense semantic similarity hits structural explicit relational knowledge. Eliminates hallucination by giving agents exact entity grounding alongside vector search.
+                    <h3 class="text-2xl font-bold text-white mb-4">Usage-Backed Finance Layer</h3>
+                    <p class="text-slate-400 text-base leading-relaxed">
+                        Funding that makes sense. A finance layer that capitalizes enterprise agent skills based entirely on actual usage and execution growth—operating with the undeniable truth of a clean bank statement.
                     </p>
                 </div>
             </div>
         </section>
 
-        <!-- Deep Dive: Graph Knowledge Hits Vector Memory -->
-        <section id="graph-vector" class="max-w-7xl mx-auto px-6 py-20 border-t border-slate-800/60">
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                    <h2 class="text-xs uppercase tracking-widest text-indigo-400 font-bold mb-3">Hybrid Memory RAG</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Why Vector Embeddings Alone Are Not Enough</h3>
-                    <p class="text-slate-400 leading-relaxed mb-6">
-                        Traditional RAG relies on pure semantic proximity via vector similarity. When complex relationships, dependencies, and hierarchy matter, vectors lose context.
+        <!-- Loyal Market Players & Star History -->
+        <section id="market" class="max-w-5xl mx-auto px-6 py-24 border-t border-slate-800/60">
+            <div class="glass-panel rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-12">
+                <div class="flex-1">
+                    <h3 class="text-3xl font-bold text-white mb-6">Backed by Real Market Players</h3>
+                    <p class="text-slate-400 text-lg leading-relaxed mb-8">
+                        The true trajectory of open engineering isn't hidden in marketing slides—it's written in open-source adoption. We honor the builders and our loyal market players who track the pulse of real growth.
                     </p>
-                    <ul class="space-y-4 text-slate-300 font-medium">
-                        <li class="flex items-start gap-3">
-                            <span class="text-emerald-400 font-bold">✓</span>
-                            <span><strong>Structural Integrity:</strong> Graph relationships maintain explicit logic and multi-hop reasoning pathways.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-emerald-400 font-bold">✓</span>
-                            <span><strong>Dense Retrieval:</strong> Vector similarity quickly narrows down unstructured semantic queries.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-emerald-400 font-bold">✓</span>
-                            <span><strong>Zero-Hallucination Grounding:</strong> The LLM generates outputs anchored in precise node connections.</span>
-                        </li>
-                    </ul>
+                    <a href="https://www.star-history.com/blog/how-to-use-github-star-history/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 px-6 py-3 rounded-xl border border-slate-700 hover:border-slate-500 bg-slate-900/50 hover:bg-slate-800 text-slate-200 transition-all font-medium">
+                        <svg class="w-5 h-5 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                        Explore Star History Insights
+                    </a>
                 </div>
-
-                <div class="bg-slate-900/80 border border-slate-800 p-8 rounded-2xl relative">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/10 to-transparent rounded-2xl"></div>
-                    <div class="relative space-y-4">
-                        <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono">
-                            <span class="text-indigo-400 font-bold">[Query Node]</span> &rarr; "User Strategy Goal"
-                        </div>
-                        <div class="flex justify-center text-slate-600 font-mono text-xs">↓ Traversing Graph Trajectory</div>
-                        <div class="p-4 rounded-xl bg-indigo-950/40 border border-indigo-800/50 text-xs font-mono">
-                            <span class="text-purple-400 font-bold">[Knowledge Mesh Hit]</span> Entity: "Omnigent Agent Protocol" &larr;&gt; Vector Score: 0.942
-                        </div>
-                        <div class="flex justify-center text-slate-600 font-mono text-xs">↓ Layer-Wise Inference via AirLLM</div>
-                        <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-800/50 text-xs font-mono text-emerald-300">
-                            <span class="font-bold">[Execution Plan]</span> Deterministic Agentic Output Generated
+                <div class="w-full md:w-1/2 bg-slate-900/80 border border-slate-700/50 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-indigo-500/5 to-emerald-500/5"></div>
+                    <div class="flex items-end gap-2 h-40 mt-4 relative z-10 border-b border-slate-700 pb-2">
+                        <!-- Abstract chart representation -->
+                        <div class="w-1/6 bg-slate-800 rounded-t-sm h-1/4"></div>
+                        <div class="w-1/6 bg-slate-700 rounded-t-sm h-2/4"></div>
+                        <div class="w-1/6 bg-indigo-900/50 rounded-t-sm h-3/4"></div>
+                        <div class="w-1/6 bg-indigo-700/80 rounded-t-sm h-[85%]"></div>
+                        <div class="w-1/6 bg-emerald-600 rounded-t-sm h-[95%] relative">
+                            <div class="absolute -top-3 -right-3 w-3 h-3 bg-white rounded-full shadow-[0_0_10px_#fff]"></div>
                         </div>
                     </div>
+                    <div class="text-xs text-slate-500 font-mono mt-4 text-center">Trajectory of the Minority.</div>
                 </div>
             </div>
         </section>
 
-        <!-- The Agentic Founder Manifesto -->
-        <section id="manifesto" class="max-w-5xl mx-auto px-6 py-20 border-t border-slate-800/60 text-center">
-            <h2 class="text-xs uppercase tracking-widest text-indigo-400 font-bold mb-3">The Vision</h2>
-            <h3 class="text-3xl md:text-5xl font-bold text-white mb-8">The Leading Agentic Founder Path</h3>
-            <blockquote class="text-xl md:text-2xl text-slate-300 italic font-light leading-relaxed mb-8 max-w-3xl mx-auto">
-                "Small, highly leveraged teams powered by autonomous agentic infrastructure will outpace traditional engineering monoliths. HuntersJump is built for the solo builder with enterprise scale."
-            </blockquote>
-            <p class="text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10">
-                You don't need massive compute clusters or hundreds of engineers to build frontier AI products. You need the right memory architecture, efficient local models, and an autonomous framework that turns vision into code.
-            </p>
-            <a href="https://github.com/Reimain/HuntersJump" target="_blank" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-slate-100 hover:bg-white text-slate-950 font-bold text-base transition-all shadow-xl">
-                <span>Join HuntersJump on GitHub</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        <!-- The Elevation -->
+        <section class="max-w-4xl mx-auto px-6 py-32 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
+                Foundation is being laid.<br>
+                <span class="text-emerald-400">Elevation is collective.</span>
+            </h2>
+            
+            <a href="https://github.com/Reimain/HuntersJump" target="_blank" class="inline-flex items-center gap-2 px-10 py-5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-[0_0_30px_-5px_rgba(99,102,241,0.5)] transition-all hover:scale-[1.02]">
+                Join the Core Repository
             </a>
+            
+            <!-- Embedded Nano Banana Easter Egg -->
+            <div class="mt-20 flex justify-center">
+                <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-yellow-500/20 bg-yellow-500/5 text-yellow-500/80 text-xs font-mono backdrop-blur-sm hover:bg-yellow-500/10 transition-colors cursor-default">
+                    <!-- Custom sleek SVG for the Nano Banana -->
+                    <svg class="w-5 h-5 drop-shadow-[0_0_8px_rgba(234,179,8,0.6)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 13c3.5-2 8-2 10 2a9.5 9.5 0 0 1-8 7c-4 0-5-5-2-9Z"></path>
+                        <path d="M4 13a4 4 0 0 1 2-5"></path>
+                        <path d="M12 16v-2"></path>
+                    </svg>
+                    <span>Nano Banana God Embedded </span>
+                </div>
+            </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-950 py-12">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500">
-            <div class="flex items-center gap-3">
-                <span class="font-bold text-slate-300">HuntersJump</span>
-                <span>— Open Source Agentic Infrastructure</span>
-            </div>
-            <div>
-                Created with passion by <a href="https://github.com/Reimain" class="text-indigo-400 hover:underline">Reimain</a>
-            </div>
-        </div>
+    <footer class="border-t border-slate-800 bg-slate-950 py-10 text-center">
+        <p class="text-slate-500 text-sm font-medium">
+            HuntersJump — <span class="text-slate-400">The Official Ballistic Seed.</span> <br class="md:hidden"> Built by <a href="https://github.com/Reimain" class="text-emerald-400 hover:underline">Reimain</a>
+        </p>
     </footer>
 
 </body>
 </html>
+
